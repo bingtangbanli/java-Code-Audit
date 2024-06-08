@@ -1,4 +1,4 @@
-<img width="789" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/62627a9b-a0c3-4161-b3b6-79a5e4f437d3"># java代码审计
+# java代码审计
 ## 一、sql注入
 1、通过一些关键字可以定位到SQL语句附近
 
